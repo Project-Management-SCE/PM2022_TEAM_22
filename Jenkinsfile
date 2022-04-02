@@ -2,7 +2,7 @@ pipeline {
     agent { docker { image 'python:3.10.1-alpine' } }
     stages {
         stage('build') {
-              steps {
+            steps {
             withEnv(["HOME=${env.WORKSPACE}"]) {
             sh script:'''
                             #/bin/bash
@@ -13,6 +13,7 @@ pipeline {
                               pip install --user -r requirements.txt
                               export PATH="$WORKSPACE/.local/bin:$PATH"
                                 '''
+                }
             }
         }
     }
