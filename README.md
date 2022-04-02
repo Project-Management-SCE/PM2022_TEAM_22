@@ -18,5 +18,5 @@ $ python migrate.py
 Make migrations:
 ```bash
 $ cd scripts
-$ python migrate.py
+$ python mkmig.py
 ```
