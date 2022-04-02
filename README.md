@@ -2,6 +2,9 @@ Project Overview
 
 Run project:
 ```bash
+# install modules
+$ pip install -r requirements.txt
+# run project
 $ python run.py
 ```
 
