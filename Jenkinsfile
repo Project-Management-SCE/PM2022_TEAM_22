@@ -1,14 +1,10 @@
-def installed = fileExists 'bin/activate'
-
-if (!installed) {
-    stage("Install Python Virtual Enviroment") {
-        sh 'virtualenv --no-site-packages .'
-    }
-}   
-
 pipeline {
     agent { docker { image 'python:3.10.1-alpine' } }
     stages {
+        stage('Create venv') {
+            sh 'pip install virtualenv --user'
+        }
+
         stage('build') {
             steps {
                  sh '''
