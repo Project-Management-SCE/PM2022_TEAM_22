@@ -3,13 +3,14 @@ pipeline {
     stages {
         stage('Create venv') {
             sh 'pip install virtualenv --user'
+            sh 'python -m venv env'
         }
 
         stage('build') {
             steps {
                  sh '''
-                    source bin/activate
-                    pip install -r <relative path to requirements file>
+                    source env/bin/activate
+                    pip install -r requirements.txt --user
                     deactivate
                 '''
             }
