@@ -1,5 +1,4 @@
 from django.shortcuts import redirect, render
-from .models import Room
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -55,13 +54,14 @@ def registerPage(request):
 
 
 def home(request):
-    rooms = Room.objects.all()
-    context = {"rooms": rooms}
+    # rooms = Room.objects.all()
+    # context = {"rooms": rooms}
+    context = {}
     return render(request, "base/home.html", context)
 
 
-@login_required(login_url="login")
-def room(request, pk):
-    room = Room.objects.get(id=pk)
-    context = {"room": room}
-    return render(request, "base/room.html", context)
+# @login_required(login_url="login")
+# def room(request, pk):
+#     room = Room.objects.get(id=pk)
+#     context = {"room": room}
+#     return render(request, "base/room.html", context)
