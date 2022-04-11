@@ -3,13 +3,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
 
 # Create your views here.
 
 
 def loginPage(request):
     page = "login"
+    context = {"page": page}
     if request.method == "POST":
         username = request.POST.get("username").lower()
         password = request.POST.get("password")
@@ -17,7 +20,7 @@ def loginPage(request):
             user = User.objects.get(username=username)
         except BaseException:
             messages.error(request, "User does not exist")
-            return render(request, "base/login_register.html")
+            return render(request, "base/login_register.html", context)
 
         user = authenticate(request, username=username, password=password)
 
@@ -27,7 +30,6 @@ def loginPage(request):
         else:
             messages.error(request, "Username or password isn't valid")
 
-    context = {"page": page}
     return render(request, "base/login_register.html", context)
 
 
@@ -51,6 +53,22 @@ def registerPage(request):
             messages.error(request, "Registeration failed")
     context = {"form": form}
     return render(request, "base/login_register.html", context)
+
+
+@login_required()
+def change_password(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "Your password was successfully updated!")
+            return redirect("change_password")
+        else:
+            messages.error(request, "Error when changing password.")
+    form = PasswordChangeForm(request.user)
+    context = {"form": form}
+    return render(request, "base/change_password.html", context)
 
 
 def home(request):

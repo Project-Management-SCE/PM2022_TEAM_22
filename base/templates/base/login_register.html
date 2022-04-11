@@ -1,7 +1,4 @@
-{% extends 'main.html' %} {% block content %}
-
-
-{% if page == 'login' %}
+{% extends 'main.html' %} {% block content %} {% if page == 'login' %}
 <div>
   <form method="POST" action="">
     {% csrf_token %}
@@ -22,10 +19,10 @@
 
 <div>
   <form method="POST" action="">
-    {% csrf_token %}
-    {{form.as_p}}
+    {% csrf_token %} {{form.as_p}}
     <input type="submit" value="Register" />
+    <p>Already signed in?</p>
+    <a href="{% url 'login' %}">Sign in</a>
   </form>
 </div>
-{% endif %}
-{% endblock content %}
+{% endif %} {% endblock content %}
