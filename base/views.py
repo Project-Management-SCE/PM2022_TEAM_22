@@ -55,7 +55,7 @@ def registerPage(request):
     return render(request, "base/login_register.html", context)
 
 
-@login_required()
+@login_required(login_url="login")
 def change_password(request):
     if request.method == "POST":
         form = PasswordChangeForm(request.user, request.POST)
