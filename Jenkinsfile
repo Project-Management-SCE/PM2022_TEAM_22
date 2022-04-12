@@ -27,7 +27,7 @@ pipeline {
 
         stage('Test') {
             agent none
-            step {
+            steps {
                 sh 'python manage.py test'
             }
         }
