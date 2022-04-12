@@ -28,8 +28,11 @@ pipeline {
         stage('Test') {
             agent any
             steps {
+                withEnv(["HOME=${env.WORKSPACE}"]) {
                 sh 'python manage.py test'
+                }
+                }
             }
         }
     }
-}
+
