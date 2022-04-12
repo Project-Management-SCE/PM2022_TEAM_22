@@ -19,7 +19,7 @@ pipeline {
                               python -m pip install --upgrade pip --user
                               ls
                               pip install --user -r requirements.txt
-                              sh 'python manage.py test'
+                              python manage.py test
                               export PATH="$WORKSPACE/.local/bin:$PATH"
                                 '''
                 }
