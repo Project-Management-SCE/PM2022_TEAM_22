@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage('Build') {
+        stage('Test') {
             agent {
                 docker {
                     image 'python:3.10.1-alpine'
@@ -19,20 +19,12 @@ pipeline {
                               python -m pip install --upgrade pip --user
                               ls
                               pip install --user -r requirements.txt
+                              sh 'python manage.py test'
                               export PATH="$WORKSPACE/.local/bin:$PATH"
                                 '''
                 }
             }
         }
-
-        stage('Test') {
-            agent any
-            steps {
-                withEnv(["HOME=${env.WORKSPACE}"]) {
-                sh 'python manage.py test'
-                }
-                }
-            }
-        }
     }
+}
 
