@@ -26,7 +26,7 @@ pipeline {
         }
 
         stage('Test') {
-            agent none
+            agent any
             steps {
                 sh 'python manage.py test'
             }
