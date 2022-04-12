@@ -9,7 +9,7 @@ pipeline {
             }
             steps {
                 withEnv(["HOME=${env.WORKSPACE}"]) {
-                    sh "apt-get install libffi-dev"
+                    sh "apk get libffi-dev"
                     sh script:'''
                             #/bin/bash
                             echo "PATH is: $PATH"
