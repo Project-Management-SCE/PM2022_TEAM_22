@@ -12,8 +12,11 @@ pipeline {
                     sh script:'''
                             #/bin/bash
                             echo "PATH is: $PATH"
+                              
                               python --version
                               python -m pip install --upgrade pip --user
+                              pip install wheel
+                              python setup.py bdist_wheel
                               ls
                               pip install --user -r requirements.txt
                               export PATH="$WORKSPACE/.local/bin:$PATH"
