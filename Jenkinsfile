@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage('build') {
+        stage('Build') {
             agent {
                 docker {
                     image 'python:3.10.1-alpine'
@@ -22,6 +22,13 @@ pipeline {
                               export PATH="$WORKSPACE/.local/bin:$PATH"
                                 '''
                 }
+            }
+        }
+
+        stage('Test') {
+            agent none
+            step {
+                sh 'python manage.py test'
             }
         }
     }
