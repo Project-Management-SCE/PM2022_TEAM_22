@@ -10,8 +10,8 @@ pipeline {
             }
             steps {
                 withEnv(["HOME=${env.WORKSPACE}"]) {
-                    sh "apk add --no-cache --virtual .pynacl_deps build-base python3-dev libffi-dev
-"
+                    sh "apk add --no-cache --virtual .pynacl_deps build-base python3-dev libffi-dev"
+
                     sh script:'''
                             #/bin/bash
                             echo "PATH is: $PATH"
