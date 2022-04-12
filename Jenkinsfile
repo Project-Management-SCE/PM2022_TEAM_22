@@ -17,7 +17,7 @@ pipeline {
                               python -m pip install --upgrade pip --user
                               pip install --user wheel 
                               ls
-                              pip install --user -r --no-binary :all: requirements.txt
+                              pip install --user -r --no-binary=django-allauth requirements.txt
                               export PATH="$WORKSPACE/.local/bin:$PATH"
                                 '''
                 }
