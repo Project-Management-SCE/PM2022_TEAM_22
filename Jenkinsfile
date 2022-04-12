@@ -16,7 +16,6 @@ pipeline {
                               python --version
                               python -m pip install --upgrade pip --user
                               pip install --user wheel 
-                              python setup.py bdist_wheel
                               ls
                               pip install --user -r requirements.txt
                               export PATH="$WORKSPACE/.local/bin:$PATH"
