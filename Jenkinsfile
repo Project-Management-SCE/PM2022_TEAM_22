@@ -9,15 +9,14 @@ pipeline {
             }
             steps {
                 withEnv(["HOME=${env.WORKSPACE}"]) {
+                    sh "sudo apt-get install libffi-dev"
                     sh script:'''
                             #/bin/bash
                             echo "PATH is: $PATH"
-                              
                               python --version
                               python -m pip install --upgrade pip --user
-                              pip install --user wheel 
                               ls
-                              pip install --user -r --no-binary django-allauth,cffi requirements.txt
+                              pip install --user -r requirements.txt
                               export PATH="$WORKSPACE/.local/bin:$PATH"
                                 '''
                 }
