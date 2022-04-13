@@ -1,3 +1,4 @@
+import yahoo_finance
 from django.forms import forms
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
@@ -6,7 +7,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth import update_session_auth_hash
-from yahoo_finance import Share
+import yfinance as yf
+import pandas_datareader as pdr
 
 
 # Create your views here.
@@ -82,10 +84,11 @@ def change_username(request):
         new_username = request.POST.get("username")
         print(new_username)
         if User.objects.filter(username=new_username).exists():
-            raise forms.ValidationError(u'Username "%s" is not available.' % new_username)
+            messages.error(request, "Username already exists.")
+            return render(request,"base/change_username.html",{})
+
         else:
             user = User.objects.get(username=request.user.username)
-            print(user)
             user.username = new_username
             user.save()
 
@@ -99,12 +102,15 @@ def definition(request):
 
 def search_results(request):
     if request.method == "POST":
-        query = request.POST.get()
-        return render(request, 'base/search_results', {})
-    # yahoo = Share('YHOO')
-    # context = {"query":query ,"price":yahoo.get_price()}
+        q = request.POST.get("query")
+
+        msft = yf.Ticker("MSFT")
+        c = msft.get_balancesheet()
+        tcn= c.to_html('write_stock.html')
+        context = {"query":q ,"Stock": tcn}
+        return render(request, 'base/search_results.html', context)
     else:
-        return render(request, 'base/home.html', {})
+        return render(request, 'base/search_results.html')
 
 
 def home(request):

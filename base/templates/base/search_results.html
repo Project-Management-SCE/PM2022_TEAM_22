@@ -1,4 +1,9 @@
 {% extends 'main.html' %}
 {% block content %}
-<h1>Search results</h1>
-{% endblock%}
+<h1>You searched for</h1>
+        {{query}}
+<h2>Results:</h2>
+{% include 'base/write_stock.html' %}
+
+
+{% endblock %}
