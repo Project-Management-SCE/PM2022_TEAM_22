@@ -1,10 +1,12 @@
+from django.forms import forms
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth import update_session_auth_hash
+from yahoo_finance import Share
 
 
 # Create your views here.
@@ -46,6 +48,7 @@ def registerPage(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
             user.save()
             login(request, user)
             return redirect("home")
@@ -71,12 +74,44 @@ def change_password(request):
     return render(request, "base/change_password.html", context)
 
 
+# change user name (not finished)
+@login_required(login_url="login")
+def change_username(request):
+    print("hello")
+    if request.method == "POST":
+        new_username = request.POST.get("username")
+        print(new_username)
+        if User.objects.filter(username=new_username).exists():
+            raise forms.ValidationError(u'Username "%s" is not available.' % new_username)
+        else:
+            user = User.objects.get(username=request.user.username)
+            print(user)
+            user.username = new_username
+            user.save()
+
+    return render(request, "base/change_username.html",{})
+
+
+def definition(request):
+    context = {}
+    return render(request, "base/definition.html", context)
+
+
+def search_results(request):
+    if request.method == "POST":
+        query = request.POST.get()
+        return render(request, 'base/search_results', {})
+    # yahoo = Share('YHOO')
+    # context = {"query":query ,"price":yahoo.get_price()}
+    else:
+        return render(request, 'base/home.html', {})
+
+
 def home(request):
     # rooms = Room.objects.all()
     # context = {"rooms": rooms}
     context = {}
     return render(request, "base/home.html", context)
-
 
 # @login_required(login_url="login")
 # def room(request, pk):
