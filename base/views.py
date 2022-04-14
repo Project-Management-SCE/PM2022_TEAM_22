@@ -7,7 +7,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.http import JsonResponse
 import yfinance as yf
+import requests
 import pandas_datareader as pdr
 
 
@@ -103,12 +105,20 @@ def definition(request):
 def search_results(request):
     if request.method == "POST":
         q = request.POST.get("query")
-
-        msft = yf.Ticker("MSFT")
-        c = msft.get_balancesheet()
-        tcn= c.to_html('write_stock.html')
-        context = {"query":q ,"Stock": tcn}
+        url = "https://yfapi.net/v6/finance/quote"
+        querystring = {"symbols":q}
+        headers = {'x-api-key': "eqdcJ2JlmM7SXrtv71mKKgdUoxE9RvvMHLuejVj0"}
+        response = requests.request("GET", url, headers=headers, params=querystring)
+        #msft = yf.Ticker("MSFT")
+        #c = msft.history(start="2022-04-02", end="2022-04-07",interval="1d")
+        #c.to_html('write_stock.html')
+        #print(type(c))
+      #  html_write = open("base/templates/base/write_stock.html","w")
+       # html_write.write(response.to_html())
+       # html_write.close()
+        context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
         return render(request, 'base/search_results.html', context)
+
     else:
         return render(request, 'base/search_results.html')
 

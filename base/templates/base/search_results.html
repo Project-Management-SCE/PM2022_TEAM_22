@@ -3,7 +3,14 @@
 <h1>You searched for</h1>
         {{query}}
 <h2>Results:</h2>
-{% include 'base/write_stock.html' %}
+<div>
+        {% for key,value in response.items%}
+        {{key}} : {{value}}
+        <br>
+        {% endfor %}
+
+</div>
+
 
 
 {% endblock %}
