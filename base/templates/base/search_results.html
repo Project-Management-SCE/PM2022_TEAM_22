@@ -1,16 +1,33 @@
 {% extends 'main.html' %}
 {% block content %}
-<h1>You searched for</h1>
-        {{query}}
-<h2>Results:</h2>
-<div>
-        {% for key,value in response.items%}
-        {{key}} : {{value}}
-        <br>
-        {% endfor %}
+<div class="results">
+        <h1>You searched for</h1>
+                <p style="margin-bottom:1em">{{query}}</p>
+        <h2>Results:</h2>
 
+        <div class="test">
+                {% for key,value in response.items %}
+                {% if key == 'displayName'%}
+                <p style="font-weight: bold;">Stock's name:</p>
+                <p>{{value}}</p>
+                {%endif%}
+                {%endfor%}
+
+                {% for key,value in response.items %}
+                {% if key == 'region'%}
+                <p style="font-weight: bold;">Region:</p>
+                <p>{{value}}</p>
+                {%endif%}
+                {%endfor%}
+
+                {% for key,value in response.items %}
+                {% if key == 'marketCap' %}
+                <p style="font-weight: bold;">Market Capitalization:</p>
+                {% load humanize %} <!--TO SHOW COMMAS -->
+                <p>{{value|intcomma}}</p>
+                {%endif%}
+                {%endfor%}
+        </div>
 </div>
-
-
 
 {% endblock %}

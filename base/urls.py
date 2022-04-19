@@ -10,6 +10,7 @@ urlpatterns = [
     path("change_username/", views.change_username, name="change_username"),
     path("definition/", views.definition, name="definition"),
     path("search_results/", views.search_results, name="search_results"),
+    path("trending/", views.trending, name="trending"),
 
     # path("room/<str:pk>", views.room, name="room"),
 ]

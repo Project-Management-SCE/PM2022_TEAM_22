@@ -1,27 +1,36 @@
 {% load socialaccount %}
-
+<center>
 <a href="/">
-  <h1>LOGO</h1>
+  <img src="/static/assets/img/StockifyLogo.png" class="logo" alt="Logo">
 </a>
+</center>
 
 
 {% if request.user.is_authenticated %}
-<p>Hello, {{request.user}}</p>
+<h4>Hello, {{request.user}} </h4>
 
-<form method="POST" action="{%url 'search_results' %}" >
-  {% csrf_token %}
-  <input  type= "text" placeholder="Search stocks..." name = "query">
-  <button type="submit">Search</button>
-</form>
 
-<a href="{% url 'logout' %}">Logout</a>
-<a href="{% url 'change_password' %}">Change Password</a>
-<a href="{% url 'change_username' %}">Change Username</a>
-<a href="{% url 'definition' %}">Definition</a>
+<div class="topnav">
+  <a href="{% url 'change_username' %}" class="nav-link">Change Username</a>
+  <a href="{% url 'change_password' %}" class="nav-link">Change Password</a>
+  <a href="{% url 'trending' %}" class="nav-link">Trending</a>
+  <a href="{% url 'definition' %}" class="nav-link">Definition</a>
+  <a href="{% url 'logout' %}" class="nav-link-logout">Logout</a>
+</div>
+
+<div class="div-search-bar"> <!-- SEARCH BAR -->
+  <form method="POST" class="form-search-bar" action="{%url 'search_results' %}" >
+    {% csrf_token %}
+    <input  type= "text" placeholder="Search stocks..." name = "query" class="search-bar">
+    <button type="submit" class="btn-search">Search</button>
+  </form>
+</div>
 
 {% else %}
+<div class="topnav">
 <a href="{% url 'login' %}">Login</a>
 <a href="{% provider_login_url 'google' %}">Login with Google</a>
+</div>
 {% endif %}
 
 <hr />

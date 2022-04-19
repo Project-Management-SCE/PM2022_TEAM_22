@@ -1,4 +1,4 @@
-import yahoo_finance
+#import yahoo_finance
 from django.forms import forms
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
@@ -8,9 +8,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.http import JsonResponse
-import yfinance as yf
+#import yfinance as yf
 import requests
-import pandas_datareader as pdr
+from django.template.defaultfilters import register
+#import pandas_datareader as pdr
 
 
 # Create your views here.
@@ -96,18 +97,28 @@ def change_username(request):
 
     return render(request, "base/change_username.html",{})
 
-
+@login_required(login_url="login")
 def definition(request):
     context = {}
     return render(request, "base/definition.html", context)
 
+@login_required(login_url="login")
+def trending(request):
+    context = {}
+    url = "https://yfapi.net/v1/finance/trending/US"
+    headers = {'x-api-key': "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
+    response = requests.request("GET", url, headers=headers)
+    context = {"response":response.json()['finance']['result']}
+    print(context)
+    return render(request, 'base/trending.html', context)
 
+@login_required(login_url="login")
 def search_results(request):
     if request.method == "POST":
         q = request.POST.get("query")
         url = "https://yfapi.net/v6/finance/quote"
         querystring = {"symbols":q}
-        headers = {'x-api-key': "eqdcJ2JlmM7SXrtv71mKKgdUoxE9RvvMHLuejVj0"}
+        headers = {'x-api-key': "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
         response = requests.request("GET", url, headers=headers, params=querystring)
         #msft = yf.Ticker("MSFT")
         #c = msft.history(start="2022-04-02", end="2022-04-07",interval="1d")
@@ -117,11 +128,10 @@ def search_results(request):
        # html_write.write(response.to_html())
        # html_write.close()
         context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
+        print(context)
         return render(request, 'base/search_results.html', context)
-
     else:
-        return render(request, 'base/search_results.html')
-
+        return render(request, 'base/home.html')
 
 def home(request):
     # rooms = Room.objects.all()
