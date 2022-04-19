@@ -1,5 +1,7 @@
 {% extends 'main.html' %}
 {% block content %}
+{%for x in response%}
+{{response.symbol}}
+{%endfor%}
 
-{{response.quotes}}
 {% endblock %}

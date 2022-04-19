@@ -108,7 +108,8 @@ def trending(request):
     url = "https://yfapi.net/v1/finance/trending/US"
     headers = {'x-api-key': "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
     response = requests.request("GET", url, headers=headers)
-    context = {"response":response.json()['finance']['result']}
+    context = {"response":response.json()['finance']['result'][0]['quotes']}
+    
     print(context)
     return render(request, 'base/trending.html', context)
 
@@ -130,6 +131,7 @@ def search_results(request):
         context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
         print(context)
         return render(request, 'base/search_results.html', context)
+        
     else:
         return render(request, 'base/home.html')
 

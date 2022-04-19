@@ -1,33 +1,22 @@
 {% extends 'main.html' %}
 {% block content %}
-<div class="results">
-        <h1>You searched for</h1>
-                <p style="margin-bottom:1em">{{query}}</p>
-        <h2>Results:</h2>
+<div class = "whole">
+        <div class="results">
+                <h2>You searched for</h2>
+                        <p>{{query}}</p>   
+        </div>
 
-        <div class="test">
-                {% for key,value in response.items %}
-                {% if key == 'displayName'%}
-                <p style="font-weight: bold;">Stock's name:</p>
-                <p>{{value}}</p>
-                {%endif%}
-                {%endfor%}
+        <div class="div-stock-info">
+                <h2>Results:</h2>
+                <p style="font-weight: bold;">Stock's display name:</p>
+                <p>{{response.displayName}}</p>
 
-                {% for key,value in response.items %}
-                {% if key == 'region'%}
-                <p style="font-weight: bold;">Region:</p>
-                <p>{{value}}</p>
-                {%endif%}
-                {%endfor%}
-
-                {% for key,value in response.items %}
-                {% if key == 'marketCap' %}
                 <p style="font-weight: bold;">Market Capitalization:</p>
-                {% load humanize %} <!--TO SHOW COMMAS -->
-                <p>{{value|intcomma}}</p>
-                {%endif%}
-                {%endfor%}
+                {% load humanize %} <!-- ADDS COMMAS TO NUMBER -->
+                <p>{{response.marketCap|intcomma}}</p>
+                
         </div>
 </div>
+
 
 {% endblock %}

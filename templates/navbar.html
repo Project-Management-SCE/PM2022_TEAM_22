@@ -1,13 +1,14 @@
 {% load socialaccount %}
-<center>
 <a href="/">
-  <img src="/static/assets/img/StockifyLogo.png" class="logo" alt="Logo">
+  <img src="/static/assets/img/stockify-logo.png" class="logo" alt="Logo">
 </a>
-</center>
+
 
 
 {% if request.user.is_authenticated %}
-<h4>Hello, {{request.user}} </h4>
+<div class="hello">
+  <h4>Hello, {{request.user}} </h4>
+</div>
 
 
 <div class="topnav">
