@@ -1,10 +1,11 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User ,Group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -77,6 +78,29 @@ def home(request):
     context = {}
     return render(request, "base/home.html", context)
 
+def upgrade_vip_page(request):
+    context = {}
+    return render(request, "base/upgrade_vip_page.html", context)
+
+
+def upgrade_vip(request):
+    group=Group.objects.get(name='vip')
+    print(11)
+    request.user.groups.add(group)
+    print(111)
+    Group.objects.get(name="vip")
+
+    context = {}
+    print(1)
+    g =None
+    if request.user.groups.exists():
+       print(2)
+       g = request.user.groups.all()[0].name
+    print(3)
+    if g == 'vip' :
+       return HttpResponse('it is vip')
+    else:
+        return render(request, "base/home.html", context)
 
 # @login_required(login_url="login")
 # def room(request, pk):
