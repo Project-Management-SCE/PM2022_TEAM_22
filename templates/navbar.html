@@ -16,6 +16,7 @@
   <a href="{% url 'change_password' %}" class="nav-link">Change Password</a>
   <a href="{% url 'trending' %}" class="nav-link">Trending</a>
   <a href="{% url 'definition' %}" class="nav-link">Definition</a>
+  <a href="{% url 'upgrade_vip_page' %}">upgrade to vip user</a>
   <a href="{% url 'logout' %}" class="nav-link-logout">Logout</a>
 </div>
 
@@ -26,12 +27,5 @@
     <button type="submit" class="btn-search">Search</button>
   </form>
 </div>
-
-{% else %}
-<div class="topnav">
-<a href="{% url 'login' %}">Login</a>
-<a href="{% provider_login_url 'google' %}">Login with Google</a>
-</div>
-{% endif %}
 
 <hr />
