@@ -1,17 +1,14 @@
-import yahoo_finance
 from django.forms import forms
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User ,Group
+from django.contrib.auth.models import User, Group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponse
 from django.http import JsonResponse
-import yfinance as yf
 import requests
-import pandas_datareader as pdr
 
 
 # Create your views here.
@@ -77,6 +74,7 @@ def change_password(request):
     context = {"form": form}
     return render(request, "base/change_password.html", context)
 
+
 # change user name (not finished)
 @login_required(login_url="login")
 def change_username(request):
@@ -86,14 +84,14 @@ def change_username(request):
         print(new_username)
         if User.objects.filter(username=new_username).exists():
             messages.error(request, "Username already exists.")
-            return render(request,"base/change_username.html",{})
+            return render(request, "base/change_username.html", {})
 
         else:
             user = User.objects.get(username=request.user.username)
             user.username = new_username
             user.save()
 
-    return render(request, "base/change_username.html",{})
+    return render(request, "base/change_username.html", {})
 
 
 def definition(request):
@@ -105,21 +103,21 @@ def search_results(request):
     if request.method == "POST":
         q = request.POST.get("query")
         url = "https://yfapi.net/v6/finance/quote"
-        querystring = {"symbols":q}
-        headers = {'x-api-key': "98GOnpY1Ra7sKcK611lldaUO3NE48pIo52DY0DEa"}
+        querystring = {"symbols": q}
+        headers = {"x-api-key": "98GOnpY1Ra7sKcK611lldaUO3NE48pIo52DY0DEa"}
         response = requests.request("GET", url, headers=headers, params=querystring)
-        #msft = yf.Ticker("MSFT")
-        #c = msft.history(start="2022-04-02", end="2022-04-07",interval="1d")
-        #c.to_html('write_stock.html')
-        #print(type(c))
-      #  html_write = open("base/templates/base/write_stock.html","w")
-       # html_write.write(response.to_html())
-       # html_write.close()
-        context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
-        return render(request, 'base/search_results.html', context)
+        # msft = yf.Ticker("MSFT")
+        # c = msft.history(start="2022-04-02", end="2022-04-07",interval="1d")
+        # c.to_html('write_stock.html')
+        # print(type(c))
+        #  html_write = open("base/templates/base/write_stock.html","w")
+        # html_write.write(response.to_html())
+        # html_write.close()
+        context = {"query": q, "response": response.json()["quoteResponse"]["result"][0]}
+        return render(request, "base/search_results.html", context)
 
     else:
-        return render(request, 'base/search_results.html')
+        return render(request, "base/search_results.html")
 
 
 def home(request):
@@ -128,13 +126,14 @@ def home(request):
     context = {}
     return render(request, "base/home.html", context)
 
+
 def upgrade_vip_page(request):
     context = {}
     return render(request, "base/upgrade_vip_page.html", context)
 
 
 def upgrade_vip(request):
-    group=Group.objects.get(name='vip')
+    group = Group.objects.get(name="vip")
     print(11)
     request.user.groups.add(group)
     print(111)
@@ -142,15 +141,16 @@ def upgrade_vip(request):
 
     context = {}
     print(1)
-    g =None
+    g = None
     if request.user.groups.exists():
-       print(2)
-       g = request.user.groups.all()[0].name
+        print(2)
+        g = request.user.groups.all()[0].name
     print(3)
-    if g == 'vip' :
-       return HttpResponse('it is vip')
+    if g == "vip":
+        return HttpResponse("it is vip")
     else:
         return render(request, "base/home.html", context)
+
 
 # @login_required(login_url="login")
 # def room(request, pk):
