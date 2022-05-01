@@ -4,9 +4,12 @@
   <h1>LOGO</h1>
 </a>
 
-
 {% if request.user.is_authenticated %}
+{% if request.user.Account.platinum == False %}
 <p>Hello, {{request.user}}</p>
+{% endif %}
+<p>Hello, {{request.user}}</p>
+<a href="{% url 'upgrade_vip_page' %}">upgrade to vip user</a>
 
 <form method="POST" action="{%url 'search_results' %}" >
   {% csrf_token %}
