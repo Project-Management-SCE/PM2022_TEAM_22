@@ -77,7 +77,6 @@ def change_password(request):
     context = {"form": form}
     return render(request, "base/change_password.html", context)
 
-
 # change user name (not finished)
 @login_required(login_url="login")
 def change_username(request):
@@ -107,7 +106,7 @@ def search_results(request):
         q = request.POST.get("query")
         url = "https://yfapi.net/v6/finance/quote"
         querystring = {"symbols":q}
-        headers = {'x-api-key': "eqdcJ2JlmM7SXrtv71mKKgdUoxE9RvvMHLuejVj0"}
+        headers = {'x-api-key': "98GOnpY1Ra7sKcK611lldaUO3NE48pIo52DY0DEa"}
         response = requests.request("GET", url, headers=headers, params=querystring)
         #msft = yf.Ticker("MSFT")
         #c = msft.history(start="2022-04-02", end="2022-04-07",interval="1d")
