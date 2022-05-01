@@ -10,8 +10,18 @@
 {% endif %}
 <p>Hello, {{request.user}}</p>
 <a href="{% url 'upgrade_vip_page' %}">upgrade to vip user</a>
+
+<form method="POST" action="{%url 'search_results' %}" >
+  {% csrf_token %}
+  <input  type= "text" placeholder="Search stocks..." name = "query">
+  <button type="submit">Search</button>
+</form>
+
 <a href="{% url 'logout' %}">Logout</a>
 <a href="{% url 'change_password' %}">Change Password</a>
+<a href="{% url 'change_username' %}">Change Username</a>
+<a href="{% url 'definition' %}">Definition</a>
+
 {% else %}
 <a href="{% url 'login' %}">Login</a>
 <a href="{% provider_login_url 'google' %}">Login with Google</a>

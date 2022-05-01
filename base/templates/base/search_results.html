@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+{% block content %}
+<h1>You searched for</h1>
+        {{query}}
+<h2>Results:</h2>
+<div>
+        {% for key,value in response.items%}
+        {{key}} : {{value}}
+        <br>
+        {% endfor %}
+
+</div>
+
+
+
+{% endblock %}
