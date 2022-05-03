@@ -8,12 +8,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'python -m venv env'
-                sh 'ls'
-                sh 'cd env && ls'
-                sh 'source env/bin/activate'
-                sh  'python -m pip install --upgrade pip --user'
-                sh  'pip install --user -r requirements.txt'
+                sh '''#!/bin/bash
+                 python -m venv env
+                 source env/bin/activate
+                 python -m pip install --upgrade pip --user
+                 pip install --user -r requirements.txt
+         '''
             }
         }
         stage('Test') {
