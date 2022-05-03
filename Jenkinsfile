@@ -10,8 +10,7 @@ pipeline {
             steps {
                 sh 'python -m venv env'
                 sh 'ls'
-                sh 'cd env'
-                sh 'ls'
+                sh 'cd env && ls'
                 sh 'source env/bin/activate'
                 sh  'python -m pip install --upgrade pip --user'
                 sh  'pip install --user -r requirements.txt'
