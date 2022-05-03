@@ -8,4 +8,5 @@ class BaseConfig(AppConfig):
     def ready(self):
         from django.contrib.auth.models import Group
 
-        test = Group.objects.get_or_create(name="test")
+        Group.objects.get_or_create(name="vip")
+        Group.objects.get_or_create(name="platinum")
