@@ -1,3 +1,4 @@
+from unittest import result
 from django.forms import forms
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
@@ -120,12 +121,18 @@ def search_results(request):
     if request.method == "POST":
         q = request.POST.get("query")
         url = "https://yfapi.net/v6/finance/quote"
+        beta_url = "https://yfapi.net/v11/finance/quoteSummary/AAPL?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile"
         querystring = {"symbols":q}
-        headers = {'x-api-key': "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
+        headers = {'x-api-key': "ApZwcHsGrP61HuHhnQFFA8ql5Va54RQt1cZqmkhV"}
         response = requests.request("GET", url, headers=headers, params=querystring)
+        response_beta = requests.request("GET",beta_url, headers=headers, params=querystring)
         context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
+        beta = {"response":response_beta.json()['quoteSummary']['result'][0]}
+        context['beta'] = beta
+        # FINISH BETA LATER
         print(context)
         return render(request, 'base/search_results.html', context)
+        
         
     else:
         return render(request, 'base/home.html')
