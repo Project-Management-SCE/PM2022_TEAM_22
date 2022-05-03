@@ -8,6 +8,7 @@ pipeline {
                 }
             }
             steps {
+                sh 'apt-get install sudo -y'
                 sh  'sudo python -m pip install --upgrade pip --user'
                 sh  'sudo pip install --user -r requirements.txt'
                 sh  'python manage.py test'
