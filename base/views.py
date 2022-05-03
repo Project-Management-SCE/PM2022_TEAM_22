@@ -109,7 +109,12 @@ def trending(request):
     url = "https://yfapi.net/v1/finance/trending/US"
     headers = {'x-api-key': "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
     response = requests.request("GET", url, headers=headers)
-    context = {"response":response.json()['finance']['result'][0]['quotes']}
+    temp = response.json()['finance']['result'][0]['quotes']
+    arr = []
+    for i,c in enumerate(temp):
+        print(c['symbol'])
+        arr.append(c['symbol'])
+    context = {"response":arr}
     
     print(context)
     return render(request, 'base/trending.html', context)
@@ -122,13 +127,6 @@ def search_results(request):
         querystring = {"symbols":q}
         headers = {'x-api-key': "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
         response = requests.request("GET", url, headers=headers, params=querystring)
-        #msft = yf.Ticker("MSFT")
-        #c = msft.history(start="2022-04-02", end="2022-04-07",interval="1d")
-        #c.to_html('write_stock.html')
-        #print(type(c))
-      #  html_write = open("base/templates/base/write_stock.html","w")
-       # html_write.write(response.to_html())
-       # html_write.close()
         context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
         print(context)
         return render(request, 'base/search_results.html', context)
