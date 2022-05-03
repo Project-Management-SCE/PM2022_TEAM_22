@@ -136,5 +136,4 @@ def home(request):
 def upgrade_vip(request):
     group = Group.objects.get(name="vip")
     request.user.groups.add(group)
-    Group.objects.get(name="vip")
     return render(request, "base/home.html")
