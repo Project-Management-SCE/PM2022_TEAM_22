@@ -141,8 +141,14 @@ def home(request):
 #     context = {}
 #     return render(request, "base/upgrade_vip_page.html", context)
 
-
+@login_required(login_url="login")
 def upgrade_vip(request):
     group = Group.objects.get(name="vip")
     request.user.groups.add(group)
-    return render(request, "base/home.html")
+    return render(request, "base/upgrade_vip.html")
+
+@login_required(login_url="login")
+def upgrade_platinum(request):
+    group = Group.objects.get(name="platinum")
+    request.user.groups.add(group)
+    return render(request, "base/upgrade_platinum.html")
