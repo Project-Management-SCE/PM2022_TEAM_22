@@ -94,32 +94,41 @@ def change_username(request):
 
     return render(request, "base/change_username.html", {})
 
-
+@login_required(login_url="login")
 def definition(request):
     context = {}
     return render(request, "base/definition.html", context)
 
+@login_required(login_url="login")
+def trending(request):
+    context = {}
+    url = "https://yfapi.net/v1/finance/trending/US"
+    headers = {'x-api-key': "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
+    response = requests.request("GET", url, headers=headers)
+    temp = response.json()['finance']['result'][0]['quotes']
+    arr = []
+    for i,c in enumerate(temp):
+        print(c['symbol'])
+        arr.append(c['symbol'])
+    context = {"response":arr}
+    
+    print(context)
+    return render(request, 'base/trending.html', context)
 
+@login_required(login_url="login")
 def search_results(request):
     if request.method == "POST":
         q = request.POST.get("query")
         url = "https://yfapi.net/v6/finance/quote"
-        querystring = {"symbols": q}
-        headers = {"x-api-key": "98GOnpY1Ra7sKcK611lldaUO3NE48pIo52DY0DEa"}
+        querystring = {"symbols":q}
+        headers = {'x-api-key': "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
         response = requests.request("GET", url, headers=headers, params=querystring)
-        # msft = yf.Ticker("MSFT")
-        # c = msft.history(start="2022-04-02", end="2022-04-07",interval="1d")
-        # c.to_html('write_stock.html')
-        # print(type(c))
-        #  html_write = open("base/templates/base/write_stock.html","w")
-        # html_write.write(response.to_html())
-        # html_write.close()
-        context = {"query": q, "response": response.json()["quoteResponse"]["result"][0]}
-        return render(request, "base/search_results.html", context)
-
+        context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
+        print(context)
+        return render(request, 'base/search_results.html', context)
+        
     else:
-        return render(request, "base/search_results.html")
-
+        return render(request, 'base/home.html')
 
 def home(request):
     # rooms = Room.objects.all()
@@ -132,8 +141,14 @@ def home(request):
 #     context = {}
 #     return render(request, "base/upgrade_vip_page.html", context)
 
-
+@login_required(login_url="login")
 def upgrade_vip(request):
     group = Group.objects.get(name="vip")
     request.user.groups.add(group)
-    return render(request, "base/home.html")
+    return render(request, "base/upgrade_vip.html")
+
+@login_required(login_url="login")
+def upgrade_platinum(request):
+    group = Group.objects.get(name="platinum")
+    request.user.groups.add(group)
+    return render(request, "base/upgrade_platinum.html")

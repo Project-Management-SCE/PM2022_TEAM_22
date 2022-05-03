@@ -1,16 +1,29 @@
 {% extends 'main.html' %}
 {% block content %}
-<h1>You searched for</h1>
-        {{query}}
-<h2>Results:</h2>
-<div>
-        {% for key,value in response.items%}
-        {{key}} : {{value}}
-        <br>
-        {% endfor %}
+<div class="whole">
+        <div class="results">
+                <h2>You searched for</h2>
+                <p>{{query}}</p>
+        </div>
 
+        <div class="div-stock-info">
+                <h2>Results:</h2>
+                <!-- {% for group in request.user.groups.all %} -->
+                {% if group.name == 'platinum' %}
+                <p style="font-weight: bold;">{{response.shortName}} 52 days low:</p>
+                <p>{{response.fiftyTwoWeekLow}}$</p>
+                <p style="font-weight: bold;">{{response.shortName}} 52 days high:</p>
+                <p>{{response.fiftyTwoWeekHigh}}$</p>
+                {% endif %}
+                <!-- {% endfor %} -->
+                <!-- {% if group.name == 'vip' or group.name == 'platinum' %}
+                <p style="font-weight: bold;">Market Capitalization:</p>
+                {% load humanize %} <!-- ADDS COMMAS TO NUMBER -->
+                <p>{{response.marketCap|intcomma}}</p>
+                {% endif %} -->
+
+        </div>
 </div>
-
 
 
 {% endblock %}

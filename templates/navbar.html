@@ -1,30 +1,42 @@
 {% load socialaccount %}
-
 <a href="/">
-  <h1>LOGO</h1>
+  <img src="/static/assets/img/stockify-logo.png" class="logo" alt="Logo">
 </a>
 
+
+
 {% if request.user.is_authenticated %}
-{% if request.user.Account.platinum == False %}
-<p>Hello, {{request.user}}</p>
-{% endif %}
-<p>Hello, {{request.user}}</p>
-<a href="{% url 'upgrade_vip' %}">upgrade to vip user</a>
+<div class="hello">
+  <h4>Hello, {{request.user}} </h4>
+</div>
 
-<form method="POST" action="{%url 'search_results' %}" >
-  {% csrf_token %}
-  <input  type= "text" placeholder="Search stocks..." name = "query">
-  <button type="submit">Search</button>
-</form>
 
-<a href="{% url 'logout' %}">Logout</a>
-<a href="{% url 'change_password' %}">Change Password</a>
-<a href="{% url 'change_username' %}">Change Username</a>
-<a href="{% url 'definition' %}">Definition</a>
+<div class="topnav">
+  <a href="{% url 'change_username' %}" class="nav-link">Change Username</a>
+  <a href="{% url 'change_password' %}" class="nav-link">Change Password</a>
+  <!-- <a href="{% url 'trending' %}" class="nav-link">Trending</a> -->
+  <a href="{% url 'definition' %}" class="nav-link">Definition</a>
+  <a href="{% url 'upgrade_vip' %}">upgrade to vip user</a>
+  <a href="{% url 'upgrade_platinum' %}">upgrade to platinum user</a>
+  <a href="{% url 'logout' %}" class="nav-link-logout">Logout</a>
+</div>
+
+<div class="div-search-bar">
+  <!-- SEARCH BAR -->
+  <form method="POST" class="form-search-bar" action="{%url 'search_results' %}">
+    {% csrf_token %}
+    <input type="text" placeholder="Search stocks..." name="query" class="search-bar">
+    <button type="submit" class="btn-search">Search</button>
+  </form>
+</div>
+
 
 {% else %}
-<a href="{% url 'login' %}">Login</a>
-<a href="{% provider_login_url 'google' %}">Login with Google</a>
+<div class="hello">
+  <h4>Hello guest! </h4>
+</div>
+<div class="topnav">
+  <a href="{% url 'login' %}" class="nav-link">Login</a>
+</div>
 {% endif %}
-
 <hr />
