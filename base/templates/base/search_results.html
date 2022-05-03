@@ -8,19 +8,17 @@
 
         <div class="div-stock-info">
                 <h2>Results:</h2>
-                <!-- {% for group in request.user.groups.all %} -->
+                {% for group in request.user.groups.all %}
                 {% if group.name == 'platinum' %}
                 <p style="font-weight: bold;">{{response.shortName}} 52 days low:</p>
                 <p>{{response.fiftyTwoWeekLow}}$</p>
                 <p style="font-weight: bold;">{{response.shortName}} 52 days high:</p>
                 <p>{{response.fiftyTwoWeekHigh}}$</p>
+                <h2>the percentage changed in price since the previous trading day:</h2>
+                <p>{{response.regularMarketChangePercent}}%</p>
                 {% endif %}
-                <!-- {% endfor %} -->
-                <!-- {% if group.name == 'vip' or group.name == 'platinum' %}
-                <p style="font-weight: bold;">Market Capitalization:</p>
-                {% load humanize %} <!-- ADDS COMMAS TO NUMBER -->
-                <p>{{response.marketCap|intcomma}}</p>
-                {% endif %} -->
+
+                {%endfor%}
 
         </div>
 </div>

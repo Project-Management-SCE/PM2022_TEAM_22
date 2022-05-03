@@ -121,7 +121,7 @@ def search_results(request):
         q = request.POST.get("query")
         url = "https://yfapi.net/v6/finance/quote"
         querystring = {"symbols":q}
-        headers = {'x-api-key': "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
+        headers = {'x-api-key': "98GOnpY1Ra7sKcK611lldaUO3NE48pIo52DY0DEa"}
         response = requests.request("GET", url, headers=headers, params=querystring)
         context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
         print(context)
