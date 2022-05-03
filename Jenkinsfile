@@ -8,8 +8,8 @@ pipeline {
                 }
             }
             steps {
-                sh  'python -m pip install --upgrade pip --user'
-                sh  'pip install --user -r requirements.txt'
+                sh  'sudo python -m pip install --upgrade pip --user'
+                sh  'sudo pip install --user -r requirements.txt'
                 sh  'python manage.py test'
             }
         }
