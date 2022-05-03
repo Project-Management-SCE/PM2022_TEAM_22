@@ -1,18 +1,14 @@
-#import yahoo_finance
 from django.forms import forms
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User ,Group
+from django.contrib.auth.models import User, Group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth import update_session_auth_hash
-from django.http import JsonResponse
-#import yfinance as yf
-import requests
-from django.template.defaultfilters import register
-#import pandas_datareader as pdr
 from django.http import HttpResponse
+from django.http import JsonResponse
+import requests
 
 
 # Create your views here.
@@ -54,7 +50,7 @@ def registerPage(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
-            user.backend = 'django.contrib.auth.backends.ModelBackend'
+            user.backend = "django.contrib.auth.backends.ModelBackend"
             user.save()
             login(request, user)
             return redirect("home")
@@ -89,14 +85,14 @@ def change_username(request):
         print(new_username)
         if User.objects.filter(username=new_username).exists():
             messages.error(request, "Username already exists.")
-            return render(request,"base/change_username.html",{})
+            return render(request, "base/change_username.html", {})
 
         else:
             user = User.objects.get(username=request.user.username)
             user.username = new_username
             user.save()
 
-    return render(request, "base/change_username.html",{})
+    return render(request, "base/change_username.html", {})
 
 @login_required(login_url="login")
 def definition(request):
@@ -140,32 +136,13 @@ def home(request):
     context = {}
     return render(request, "base/home.html", context)
 
-def upgrade_vip_page(request):
-    context = {}
-    return render(request, "base/upgrade_vip_page.html", context)
+
+# def upgrade_vip_page(request):
+#     context = {}
+#     return render(request, "base/upgrade_vip_page.html", context)
 
 
 def upgrade_vip(request):
-    group=Group.objects.get(name='vip')
-    print(11)
+    group = Group.objects.get(name="vip")
     request.user.groups.add(group)
-    print(111)
-    Group.objects.get(name="vip")
-
-    context = {}
-    print(1)
-    g =None
-    if request.user.groups.exists():
-       print(2)
-       g = request.user.groups.all()[0].name
-    print(3)
-    if g == 'vip' :
-       return HttpResponse('it is vip')
-    else:
-        return render(request, "base/home.html", context)
-
-# @login_required(login_url="login")
-# def room(request, pk):
-#     room = Room.objects.get(id=pk)
-#     context = {"room": room}
-#     return render(request, "base/room.html", context)
+    return render(request, "base/home.html")
