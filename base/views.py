@@ -128,33 +128,13 @@ def home(request):
     return render(request, "base/home.html", context)
 
 
-def upgrade_vip_page(request):
-    context = {}
-    return render(request, "base/upgrade_vip_page.html", context)
+# def upgrade_vip_page(request):
+#     context = {}
+#     return render(request, "base/upgrade_vip_page.html", context)
 
 
 def upgrade_vip(request):
     group = Group.objects.get(name="vip")
-    print(11)
     request.user.groups.add(group)
-    print(111)
     Group.objects.get(name="vip")
-
-    context = {}
-    print(1)
-    g = None
-    if request.user.groups.exists():
-        print(2)
-        g = request.user.groups.all()[0].name
-    print(3)
-    if g == "vip":
-        return HttpResponse("it is vip")
-    else:
-        return render(request, "base/home.html", context)
-
-
-# @login_required(login_url="login")
-# def room(request, pk):
-#     room = Room.objects.get(id=pk)
-#     context = {"room": room}
-#     return render(request, "base/room.html", context)
+    return render(request, "base/home.html")
