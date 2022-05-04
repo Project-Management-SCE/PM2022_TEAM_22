@@ -121,7 +121,7 @@ def search_results(request):
     if request.method == "POST":
         q = request.POST.get("query")
         url = "https://yfapi.net/v6/finance/quote"
-        beta_url = "https://yfapi.net/v11/finance/quoteSummary/AAPL?lang=en&region=US&modules=defaultKeyStatistics"
+        beta_url = "https://yfapi.net/v11/finance/quoteSummary/" + q + "?lang=en&region=US&modules=defaultKeyStatistics"
         querystring = {"symbols":q}
         headers = {'x-api-key': "ApZwcHsGrP61HuHhnQFFA8ql5Va54RQt1cZqmkhV"}
         response = requests.request("GET", url, headers=headers, params=querystring)
