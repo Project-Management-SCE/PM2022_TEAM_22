@@ -121,13 +121,13 @@ def search_results(request):
     if request.method == "POST":
         q = request.POST.get("query")
         url = "https://yfapi.net/v6/finance/quote"
-        beta_url = "https://yfapi.net/v11/finance/quoteSummary/AAPL?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile"
+        beta_url = "https://yfapi.net/v11/finance/quoteSummary/AAPL?lang=en&region=US&modules=defaultKeyStatistics"
         querystring = {"symbols":q}
         headers = {'x-api-key': "ApZwcHsGrP61HuHhnQFFA8ql5Va54RQt1cZqmkhV"}
         response = requests.request("GET", url, headers=headers, params=querystring)
         response_beta = requests.request("GET",beta_url, headers=headers, params=querystring)
         context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
-        beta = {"response":response_beta.json()['quoteSummary']['result'][0]}
+        beta = response_beta.json()['quoteSummary']['result'][0]['defaultKeyStatistics']['beta']['raw']
         context['beta'] = beta
         # FINISH BETA LATER
         print(context)
