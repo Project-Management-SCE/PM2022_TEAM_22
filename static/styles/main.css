@@ -59,10 +59,10 @@ body{
   color: black;
 }
 
-.whole{
+.whole, .about_div, .def_div{
   width: max-content;
   margin: auto;
-  border: 3px solid #333;
+  /* border: 3px solid #333; */
   padding: 10px;
   text-align: center;
 }
@@ -71,7 +71,7 @@ body{
   margin-left: 2px; 
 } */
 
-p{
+p,li{
   font-size:24px;
 }
 
