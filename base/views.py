@@ -159,3 +159,8 @@ def upgrade_platinum(request):
     group = Group.objects.get(name="platinum")
     request.user.groups.add(group)
     return render(request, "base/upgrade_platinum.html")
+
+@login_required(login_url="login")
+def about(request):
+    context = {}
+    return render(request, "base/about.html", context)
