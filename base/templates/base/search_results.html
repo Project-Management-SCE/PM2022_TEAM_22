@@ -19,6 +19,13 @@
                 <p style="font-weight: bold;">{{response.shortName}} beta:</p>
                 <p>{{beta}}</p>
                 {% endif %}
+                {% if group.name == 'platinum' %}
+                <p style="font-weight: bold;">{{response.shortName}} day low:</p>
+                <p>{{response.regularMarketDayLow}}$</p>
+                <p style="font-weight: bold;">{{response.shortName}} day high:</p>
+                <p>{{response.regularMarketDayHigh}}$</p>
+                {% endif %}
+
 
                 <!-- {% endfor %} -->
                 <!-- {% if group.name == 'vip' or group.name == 'platinum' %}
