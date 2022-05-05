@@ -129,7 +129,6 @@ def search_results(request):
         context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
         beta = response_beta.json()['quoteSummary']['result'][0]['defaultKeyStatistics']['beta']['raw']
         context['beta'] = beta
-        # FINISH BETA LATER
         print(context)
         return render(request, 'base/search_results.html', context)
         
