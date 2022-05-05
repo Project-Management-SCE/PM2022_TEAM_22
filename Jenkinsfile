@@ -24,6 +24,14 @@ pipeline {
          '''
             }
         }
+        stage('Coverage Report') {
+            steps {
+                sh '''#!/bin/bash
+                 source env/bin/activate
+                 coverage run --source='.' manage.py test
+         '''
+            }
+        }
     }
 }
 
