@@ -15,11 +15,20 @@
                 <p style="font-weight: bold;">{{response.shortName}} 52 days high:</p>
                 <p>{{response.fiftyTwoWeekHigh}}$</p>
                 {% endif %}
+
+                {% if group.name == 'platinum' %}
+                <p style="font-weight: bold;">{{response.shortName}} day low:</p>
+                <p>{{response.regularMarketDayLow}}$</p>
+                <p style="font-weight: bold;">{{response.shortName}} day high:</p>
+                <p>{{response.regularMarketDayHigh}}$</p>
+                {% endif %}
+
+
                 <!-- {% endfor %} -->
                 <!-- {% if group.name == 'vip' or group.name == 'platinum' %}
                 <p style="font-weight: bold;">Market Capitalization:</p>
                 {% load humanize %} <!-- ADDS COMMAS TO NUMBER -->
-                <p>{{response.marketCap|intcomma}}</p>
+                <!-- <p>{{response.marketCap|intcomma}}</p>
                 {% endif %} -->
 
         </div>
