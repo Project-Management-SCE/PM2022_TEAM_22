@@ -9,21 +9,43 @@
         <div class="div-stock-info">
                 <h2>Results:</h2>
                 <!-- {% for group in request.user.groups.all %} -->
-                {% if group.name == 'platinum' %}
+
                 <p style="font-weight: bold;">{{response.shortName}} 52 days low:</p>
+                {% if group.name == 'platinum' %}
                 <p>{{response.fiftyTwoWeekLow}}$</p>
+                {% else %}
+                <p>You need to be a Platinum user to view this information.</p>
+                {% endif %}
+
                 <p style="font-weight: bold;">{{response.shortName}} 52 days high:</p>
+                {% if group.name == 'platinum' %}
                 <p>{{response.fiftyTwoWeekHigh}}$</p>
+                {% else %}
+                <p>You need to be a Platinum user to view this information.</p>
                 {% endif %}
-                {% if group.name == 'platinum' %}
+
+
                 <p style="font-weight: bold;">{{response.shortName}} beta:</p>
-                <p>{{beta}}</p>
-                {% endif %}
                 {% if group.name == 'platinum' %}
+                <p>{{beta}}</p>
+                {% else %}
+                <p>You need to be a Platinum user to view this information.</p>
+                {% endif %}
+
+
                 <p style="font-weight: bold;">{{response.shortName}} day low:</p>
+                {% if group.name == 'platinum' %}
                 <p>{{response.regularMarketDayLow}}$</p>
+                {% else %}
+                <p>You need to be a Platinum user to view this information.</p>
+                {% endif %}
+
+
                 <p style="font-weight: bold;">{{response.shortName}} day high:</p>
+                {% if group.name == 'platinum' %}
                 <p>{{response.regularMarketDayHigh}}$</p>
+                {% else %}
+                <p>You need to be a Platinum user to view this information.</p>
                 {% endif %}
 
 
@@ -32,7 +54,7 @@
                 <p style="font-weight: bold;">Market Capitalization:</p>
                 {% load humanize %} <!-- ADDS COMMAS TO NUMBER -->
                 <!-- <p>{{response.marketCap|intcomma}}</p> -->
-                {% endif %} -->
+                <!-- {% endif %} -->
 
         </div>
 </div>
