@@ -7,8 +7,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth import update_session_auth_hash
-from django.http import HttpResponse
-from django.http import JsonResponse
 import requests
 
 
@@ -95,26 +93,29 @@ def change_username(request):
 
     return render(request, "base/change_username.html", {})
 
+
 @login_required(login_url="login")
 def definition(request):
     context = {}
     return render(request, "base/definition.html", context)
 
+
 @login_required(login_url="login")
 def trending(request):
     context = {}
     url = "https://yfapi.net/v1/finance/trending/US"
-    headers = {'x-api-key': "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
+    headers = {"x-api-key": "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
     response = requests.request("GET", url, headers=headers)
-    temp = response.json()['finance']['result'][0]['quotes']
+    temp = response.json()["finance"]["result"][0]["quotes"]
     arr = []
-    for i,c in enumerate(temp):
-        print(c['symbol'])
-        arr.append(c['symbol'])
-    context = {"response":arr}
-    
+    for i, c in enumerate(temp):
+        print(c["symbol"])
+        arr.append(c["symbol"])
+    context = {"response": arr}
+
     print(context)
-    return render(request, 'base/trending.html', context)
+    return render(request, "base/trending.html", context)
+
 
 @login_required(login_url="login")
 def search_results(request):
@@ -122,30 +123,24 @@ def search_results(request):
         q = request.POST.get("query")
         url = "https://yfapi.net/v6/finance/quote"
         beta_url = "https://yfapi.net/v11/finance/quoteSummary/" + q + "?lang=en&region=US&modules=defaultKeyStatistics"
-        querystring = {"symbols":q}
-        headers = {'x-api-key': "ApZwcHsGrP61HuHhnQFFA8ql5Va54RQt1cZqmkhV"}
+        querystring = {"symbols": q}
+        headers = {"x-api-key": "ApZwcHsGrP61HuHhnQFFA8ql5Va54RQt1cZqmkhV"}
         response = requests.request("GET", url, headers=headers, params=querystring)
-        response_beta = requests.request("GET",beta_url, headers=headers, params=querystring)
-        context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
-        beta = response_beta.json()['quoteSummary']['result'][0]['defaultKeyStatistics']['beta']['raw']
-        context['beta'] = beta
+        response_beta = requests.request("GET", beta_url, headers=headers, params=querystring)
+        context = {"query": q, "response": response.json()["quoteResponse"]["result"][0]}
+        beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]["raw"]
+        context["beta"] = beta
         print(context)
-        return render(request, 'base/search_results.html', context)
-        
-        
+        return render(request, "base/search_results.html", context)
+
     else:
-        return render(request, 'base/home.html')
+        return render(request, "base/home.html")
+
 
 def home(request):
-    # rooms = Room.objects.all()
-    # context = {"rooms": rooms}
     context = {}
     return render(request, "base/home.html", context)
 
-
-# def upgrade_vip_page(request):
-#     context = {}
-#     return render(request, "base/upgrade_vip_page.html", context)
 
 @login_required(login_url="login")
 def upgrade_vip(request):
@@ -153,11 +148,13 @@ def upgrade_vip(request):
     request.user.groups.add(group)
     return render(request, "base/upgrade_vip.html")
 
+
 @login_required(login_url="login")
 def upgrade_platinum(request):
     group = Group.objects.get(name="platinum")
     request.user.groups.add(group)
     return render(request, "base/upgrade_platinum.html")
+
 
 @login_required(login_url="login")
 def about(request):
