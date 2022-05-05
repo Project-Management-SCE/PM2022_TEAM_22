@@ -59,7 +59,7 @@ body{
   color: black;
 }
 
-.whole, .about_div, .def_div{
+.whole, .about_div{
   width: max-content;
   margin: auto;
   /* border: 3px solid #333; */
@@ -80,4 +80,12 @@ p,li{
   width:max-content;
   padding: 10px;
   text-align: center;
+}
+
+.def_div_container{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 30%;
+  margin: 0 auto;
 }
