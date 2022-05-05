@@ -20,7 +20,8 @@ pipeline {
             steps {
                 sh '''#!/bin/bash
                  source env/bin/activate
-                 python manage.py test
+                 coverage run --source='base' manage.py test
+
          '''
             }
         }
@@ -28,7 +29,6 @@ pipeline {
             steps {
                 sh '''#!/bin/bash
                  source env/bin/activate
-                 coverage run --source='base' manage.py test
                  coverage report
          '''
             }
