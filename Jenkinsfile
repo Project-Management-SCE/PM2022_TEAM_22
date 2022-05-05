@@ -16,7 +16,7 @@ pipeline {
          '''
             }
         }
-        stage('Test') {
+        stage('Tests') {
             steps {
                 sh '''#!/bin/bash
                  source env/bin/activate
