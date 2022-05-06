@@ -128,8 +128,12 @@ def search_results(request):
         response = requests.request("GET", url, headers=headers, params=querystring)
         response_beta = requests.request("GET", beta_url, headers=headers, params=querystring)
         context = {"query": q, "response": response.json()["quoteResponse"]["result"][0]}
-        beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]["raw"]
-        context["beta"] = beta
+        beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
+        
+        if(beta):
+            context["beta"] = beta["raw"]
+        else:
+            context["beta"] = "NOT FOUND"
         print(context)
         return render(request, "base/search_results.html", context)
 
