@@ -37,3 +37,9 @@ class queryTestCase(TestCase):
     
     def test_beta(self):
         self.assertIn("beta", self.context.keys())
+
+    def test_regularMarketDayLow(self):
+        self.assertIn("regularMarketDayLow", self.context.get('response').keys())
+    
+    def test_regularMarketDayHigh(self):
+        self.assertIn("regularMarketDayHigh", self.context.get('response').keys())
