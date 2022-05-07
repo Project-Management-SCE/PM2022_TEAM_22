@@ -34,3 +34,6 @@ class queryTestCase(TestCase):
     
     def test_fiftyTwoWeekHigh(self):
         self.assertIn("fiftyTwoWeekHigh", self.context.get('response').keys())
+    
+    def test_beta(self):
+        self.assertIn("beta", self.context.keys())
