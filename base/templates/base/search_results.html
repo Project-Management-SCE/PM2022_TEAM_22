@@ -16,6 +16,9 @@
                 <p>{{response.fiftyTwoWeekHigh}}$</p>
                 <h2>the percentage changed in price since the previous trading day:</h2>
                 <p>{{response.regularMarketChangePercent}}%</p>
+                <h2>summary:</h2>
+                <textarea cols="100">{{sum.longBusinessSummary}}%</textarea>
+
                 {% endif %}
 
                 {%endfor%}

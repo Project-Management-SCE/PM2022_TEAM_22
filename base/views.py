@@ -9,6 +9,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.http import HttpResponse
 from django.http import JsonResponse
 import requests
+import wikipedia
 
 
 # Create your views here.
@@ -120,10 +121,16 @@ def search_results(request):
     if request.method == "POST":
         q = request.POST.get("query")
         url = "https://yfapi.net/v6/finance/quote"
+        url2 = "https://yfapi.net/v11/finance/quoteSummary/AAPL?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile"
         querystring = {"symbols":q}
         headers = {'x-api-key': "98GOnpY1Ra7sKcK611lldaUO3NE48pIo52DY0DEa"}
+        headers2 = {'x-api-key': "oa8iEji9c49aC1lu8p1t26y9QWZNhQFT6eDT3k6F"}
+
         response = requests.request("GET", url, headers=headers, params=querystring)
         context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
+        response2 = requests.request("GET", url2, headers=headers2, params=querystring)
+        temp = { "sum": response2.json()['quoteSummary']['result'][0]['assetProfile']}
+        context.update(temp)
         print(context)
         return render(request, 'base/search_results.html', context)
         
