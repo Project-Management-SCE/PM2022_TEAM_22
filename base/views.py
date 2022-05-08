@@ -168,9 +168,7 @@ def home(request):
     return render(request, "base/home.html", context)
 
 
-# def upgrade_vip_page(request):
-#     context = {}
-#     return render(request, "base/upgrade_vip_page.html", context)
+
 
 @login_required(login_url="login")
 def upgrade_vip(request):
