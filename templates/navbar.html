@@ -18,6 +18,7 @@
   <a href="{% url 'definition' %}" class="nav-link">Definition</a>
   <a href="{% url 'upgrade_vip' %}">upgrade to vip user</a>
   <a href="{% url 'upgrade_platinum' %}">upgrade to platinum user</a>
+  <a href="{% url 'about' %}" class="nav-link">About</a>
   <a href="{% url 'logout' %}" class="nav-link-logout">Logout</a>
 </div>
 
@@ -25,7 +26,7 @@
   <!-- SEARCH BAR -->
   <form method="POST" class="form-search-bar" action="{%url 'search_results' %}">
     {% csrf_token %}
-    <input type="text" placeholder="Search stocks..." name="query" class="search-bar">
+    <input type="text" placeholder="Search stocks..." name="query"  autocomplete="on" class="search-bar">
     <button type="submit" class="btn-search">Search</button>
   </form>
 </div>

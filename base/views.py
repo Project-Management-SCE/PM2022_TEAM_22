@@ -1,3 +1,4 @@
+from unittest import result
 from django.forms import forms
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
@@ -6,10 +7,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth import update_session_auth_hash
-from django.http import HttpResponse
-from django.http import JsonResponse
 import requests
-import wikipedia
 
 
 # Create your views here.
@@ -104,9 +102,9 @@ def definition(request):
 def trending(request):
     context = {}
     url = "https://yfapi.net/v1/finance/trending/US"
-    headers = {'x-api-key': "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
+    headers = {"x-api-key": "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
     response = requests.request("GET", url, headers=headers)
-    temp = response.json()['finance']['result'][0]['quotes']
+    temp = response.json()["finance"]["result"][0]["quotes"]
     arr = []
     for i,c in enumerate(temp):
         print(c['symbol'])
@@ -114,36 +112,36 @@ def trending(request):
     context = {"response":arr}
     
     print(context)
-    return render(request, 'base/trending.html', context)
+    return render(request, "base/trending.html", context)
+
 
 @login_required(login_url="login")
 def search_results(request):
     if request.method == "POST":
         q = request.POST.get("query")
         url = "https://yfapi.net/v6/finance/quote"
-        url2 = "https://yfapi.net/v11/finance/quoteSummary/AAPL?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile"
-        url3 = "https://yfapi.net/v6/finance/recommendationsbysymbol/AAPL"
-
-        querystring = {"symbols":q}
-        headers = {'x-api-key': "98GOnpY1Ra7sKcK611lldaUO3NE48pIo52DY0DEa"}
-        paccwordAnton = {'x-api-key': "oa8iEji9c49aC1lu8p1t26y9QWZNhQFT6eDT3k6F"}
-
+        beta_url = "https://yfapi.net/v11/finance/quoteSummary/" + q + "?lang=en&region=US&modules=defaultKeyStatistics"
+        querystring = {"symbols": q}
+        headers = {"x-api-key": "98GOnpY1Ra7sKcK611lldaUO3NE48pIo52DY0DEa"}
         response = requests.request("GET", url, headers=headers, params=querystring)
-        context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
-        responseSummary = requests.request("GET", url2, headers=paccwordAnton, params=querystring)
-        dictSummary = { "sum": responseSummary.json()['quoteSummary']['result'][0]['assetProfile']}
-        context.update(dictSummary)
-        response3 = requests.request("GET", url3, headers=paccwordAnton, params=querystring)
-        dictRecommended = {"recommended": response3.json()['finance']['result'][0]['recommendedSymbols']}
+        response_beta = requests.request("GET", beta_url, headers=headers, params=querystring)
+        print(response_beta.json())
+        context = {"query": q, "response": response.json()["quoteResponse"]["result"][0]}
+        earn = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["earningsQuarterlyGrowth"]
+        beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
+        print(earn)
+        context["earn"] = earn["fmt"]
+        if(beta):
+           context["beta"] = beta["raw"]
+        else:
+            context["beta"] = "NOT FOUND"
 
-        print(dictRecommended)
-        print('-------------------------------------------')
         print(context)
-        context.update(dictRecommended)
-        return render(request, 'base/search_results.html', context)
-        
+        return render(request, "base/search_results.html", context)
+
     else:
-        return render(request, 'base/home.html')
+        return render(request, "base/home.html")
+
 
 def home(request):
     # rooms = Room.objects.all()
@@ -162,8 +160,15 @@ def upgrade_vip(request):
     request.user.groups.add(group)
     return render(request, "base/upgrade_vip.html")
 
+
 @login_required(login_url="login")
 def upgrade_platinum(request):
     group = Group.objects.get(name="platinum")
     request.user.groups.add(group)
     return render(request, "base/upgrade_platinum.html")
+
+
+@login_required(login_url="login")
+def about(request):
+    context = {}
+    return render(request, "base/about.html", context)

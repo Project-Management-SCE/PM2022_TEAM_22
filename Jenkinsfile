@@ -16,11 +16,20 @@ pipeline {
          '''
             }
         }
-        stage('Test') {
+        stage('Tests') {
             steps {
                 sh '''#!/bin/bash
                  source env/bin/activate
-                 python manage.py test
+                 coverage run --source='base' manage.py test
+
+         '''
+            }
+        }
+        stage('Coverage Report') {
+            steps {
+                sh '''#!/bin/bash
+                 source env/bin/activate
+                 coverage report
          '''
             }
         }
