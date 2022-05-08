@@ -5,10 +5,10 @@ class BaseConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "base"
 
-    def ready(self):
-        from django.contrib.auth.models import Group
-        from dotenv import load_dotenv
+    # def ready(self):
+    #     from django.contrib.auth.models import Group
+    #     from dotenv import load_dotenv
 
-        load_dotenv()
-        Group.objects.get_or_create(name="vip")
-        Group.objects.get_or_create(name="platinum")
+    #     load_dotenv()
+    #     Group.objects.get_or_create(name="vip")
+    #     Group.objects.get_or_create(name="platinum")
