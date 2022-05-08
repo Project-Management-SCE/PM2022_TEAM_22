@@ -35,8 +35,8 @@ pipeline {
         }
     }
     post {
-        cleanup {
-            deleteDir()
+        always {
+            cleanWs()
         }
     }
 }
