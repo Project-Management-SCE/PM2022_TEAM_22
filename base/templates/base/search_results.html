@@ -8,7 +8,7 @@
 
         <div class="div-stock-info">
                 <h2>Results:</h2>
-                <!-- {% for group in request.user.groups %} -->
+                <!-- {% for group in request.user.groups.all %} -->
                 <!--   {% load humanize %} -->
                 <p style="font-weight: bold;">{{response.shortName}} 52 days low:</p>
                 {% if group.name == 'platinum' %}
@@ -71,6 +71,20 @@
 
                 <!-- {% endfor %} -->
 
+                                {% for group in request.user.groups.all %}
+                {% if group.name == 'platinum' %}
+                <h2>the percentage changed in price since the previous trading day:</h2>
+                <p>{{response.regularMarketChangePercent}}%</p>
+                <h2>summary:</h2>
+                <textarea cols="100" rows="15">{{sum.longBusinessSummary}}%</textarea>
+                <h2>best stocks Score:</h2>
+                {% for temp in recommended %}
+                <p>{{temp.symbol}}--{{temp.score}}</p>
+
+                {% endfor %}
+                {% endif %}
+
+                {%endfor%}
 
         </div>
 </div>
