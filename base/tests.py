@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Favorite
+import requests
 
 # Create your tests here.
 # class FavoriteTestCase(TestCase):
@@ -13,6 +14,7 @@ from .models import Favorite
 #         self.assertEqual(apple_fav.user.username, "testuser")
 #         self.assertEqual(apple_fav.name, "apple")
 
+
 class queryTestCase(TestCase):
     q = "msft"
     url = "https://yfapi.net/v6/finance/quote"
@@ -23,31 +25,31 @@ class queryTestCase(TestCase):
     response_beta = requests.request("GET", beta_url, headers=headers, params=querystring)
     context = {"query": q, "response": response.json()["quoteResponse"]["result"][0]}
     beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
-    if(beta):
-            context["beta"] = beta["raw"]
+    if beta:
+        context["beta"] = beta["raw"]
     else:
         context["beta"] = "NOT FOUND"
 
     def test_fiftyTwoWeekLow(self):
-        self.assertIn("fiftyTwoWeekLow", self.context.get('response').keys())
+        self.assertIn("fiftyTwoWeekLow", self.context.get("response").keys())
 
     def test_fiftyTwoWeekHigh(self):
-        self.assertIn("fiftyTwoWeekHigh", self.context.get('response').keys())
+        self.assertIn("fiftyTwoWeekHigh", self.context.get("response").keys())
 
     def test_beta(self):
         self.assertIn("beta", self.context.keys())
 
     def test_regularMarketDayLow(self):
-        self.assertIn("regularMarketDayLow", self.context.get('response').keys())
+        self.assertIn("regularMarketDayLow", self.context.get("response").keys())
 
     def test_regularMarketDayHigh(self):
-        self.assertIn("regularMarketDayHigh", self.context.get('response').keys())
+        self.assertIn("regularMarketDayHigh", self.context.get("response").keys())
 
     def test_DayVolume(self):
-        self.assertIn("regularMarketVolume", self.context.get('response').keys())
+        self.assertIn("regularMarketVolume", self.context.get("response").keys())
 
     def test_MarketCap(self):
-        self.assertIn("marketCap", self.context.get('response').keys())
+        self.assertIn("marketCap", self.context.get("response").keys())
 
     def test_earningsQuarterlyGrowth(self):
-        self.assertIn("earningsQuarterlyGrowth", self.context.get('response').keys())
+        self.assertIn("earningsQuarterlyGrowth", self.context.get("response").keys())
