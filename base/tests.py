@@ -20,24 +20,24 @@ class queryTestCase(TestCase):
     q = "msft"
     url = "https://yfapi.net/v6/finance/quote"
     beta_url = "https://yfapi.net/v11/finance/quoteSummary/" + q + "?lang=en&region=US&modules=defaultKeyStatistics"
+    recommendUrl = "https://yfapi.net/v6/finance/recommendationsbysymbol/AAPL"
     querystring = {"symbols": q}
     headers = {"x-api-key": "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
     try:
         response = requests.request("GET", url, headers=headers, params=querystring)
         response_beta = requests.request("GET", beta_url, headers=headers, params=querystring)
         context = {"query": q, "response": response.json()["quoteResponse"]["result"][0]}
+        responserecommend = requests.request("GET", recommendUrl, headers=headers, params=querystring)
+        dictRecommended = {"recommended": responserecommend.json()['finance']['result'][0]['recommendedSymbols']}
+        beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
         summary = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]
         beta = summary["beta"]
         earn = summary["earningsQuarterlyGrowth"]
+
         if beta:
             context["beta"] = beta["raw"]
         else:
             context["beta"] = "NOT FOUND"
-
-        if earn:
-            context["earn"] = earn["fmt"]
-        else:
-            context["earn"] = "NOT FOUND"
 
         def test_fiftyTwoWeekLow(self):
             self.assertIn("fiftyTwoWeekLow", self.context.get("response").keys())
