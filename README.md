@@ -1,4 +1,4 @@
-.pyProject Overview
+Project Overview
 
 Run project:
 ```bash
