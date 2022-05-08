@@ -1,7 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Favorite
-import requests
 
 # Create your tests here.
 # class FavoriteTestCase(TestCase):
@@ -31,15 +30,24 @@ class queryTestCase(TestCase):
 
     def test_fiftyTwoWeekLow(self):
         self.assertIn("fiftyTwoWeekLow", self.context.get('response').keys())
-    
+
     def test_fiftyTwoWeekHigh(self):
         self.assertIn("fiftyTwoWeekHigh", self.context.get('response').keys())
-    
+
     def test_beta(self):
         self.assertIn("beta", self.context.keys())
 
     def test_regularMarketDayLow(self):
         self.assertIn("regularMarketDayLow", self.context.get('response').keys())
-    
+
     def test_regularMarketDayHigh(self):
         self.assertIn("regularMarketDayHigh", self.context.get('response').keys())
+
+    def test_DayVolume(self):
+        self.assertIn("regularMarketVolume", self.context.get('response').keys())
+
+    def test_MarketCap(self):
+        self.assertIn("marketCap", self.context.get('response').keys())
+
+    def test_earningsQuarterlyGrowth(self):
+        self.assertIn("earningsQuarterlyGrowth", self.context.get('response').keys())
