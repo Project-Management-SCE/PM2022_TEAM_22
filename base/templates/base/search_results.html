@@ -8,10 +8,10 @@
 
         <div class="div-stock-info">
                 <h2>Results:</h2>
-                <!-- {% for group in request.user.groups %} -->
+                <!-- {% for group in request.user.groups.all %} -->
                 <!--   {% load humanize %} -->
                 <p style="font-weight: bold;">{{response.shortName}} 52 days low:</p>
-                {% if group.name == 'platinum' %}
+                {% if group.name == 'platinum'  %}
                 <p>{{response.fiftyTwoWeekLow}}$</p>
                 {% else %}
                 <p>You need to be a Platinum user to view this information.</p>
