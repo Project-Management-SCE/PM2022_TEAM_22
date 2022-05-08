@@ -93,10 +93,12 @@ def change_username(request):
 
     return render(request, "base/change_username.html", {})
 
+
 @login_required(login_url="login")
 def definition(request):
     context = {}
     return render(request, "base/definition.html", context)
+
 
 @login_required(login_url="login")
 def trending(request):
@@ -106,11 +108,11 @@ def trending(request):
     response = requests.request("GET", url, headers=headers)
     temp = response.json()["finance"]["result"][0]["quotes"]
     arr = []
-    for i,c in enumerate(temp):
-        print(c['symbol'])
-        arr.append(c['symbol'])
-    context = {"response":arr}
-    
+    for i, c in enumerate(temp):
+        print(c["symbol"])
+        arr.append(c["symbol"])
+    context = {"response": arr}
+
     print(context)
     return render(request, "base/trending.html", context)
 
@@ -131,8 +133,8 @@ def search_results(request):
         beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
         print(earn)
         context["earn"] = earn["fmt"]
-        if(beta):
-           context["beta"] = beta["raw"]
+        if beta:
+            context["beta"] = beta["raw"]
         else:
             context["beta"] = "NOT FOUND"
 
@@ -157,14 +159,14 @@ def home(request):
 @login_required(login_url="login")
 def upgrade_vip(request):
     group = Group.objects.get(name="vip")
-    request.user.groups.add(group)
+    request.user.groups.set([group])
     return render(request, "base/upgrade_vip.html")
 
 
 @login_required(login_url="login")
 def upgrade_platinum(request):
     group = Group.objects.get(name="platinum")
-    request.user.groups.add(group)
+    request.user.groups.set([group])
     return render(request, "base/upgrade_platinum.html")
 
 
