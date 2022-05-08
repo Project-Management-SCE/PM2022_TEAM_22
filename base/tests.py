@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .models import Favorite
 import requests
 
+
 # Create your tests here.
 class FavoriteTestCase(TestCase):
     def setUp(self):
@@ -25,11 +26,18 @@ class queryTestCase(TestCase):
         response = requests.request("GET", url, headers=headers, params=querystring)
         response_beta = requests.request("GET", beta_url, headers=headers, params=querystring)
         context = {"query": q, "response": response.json()["quoteResponse"]["result"][0]}
-        beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
+        summary = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]
+        beta = summary["beta"]
+        earn = summary["earningsQuarterlyGrowth"]
         if beta:
             context["beta"] = beta["raw"]
         else:
             context["beta"] = "NOT FOUND"
+
+        if earn:
+            context["earn"] = earn["fmt"]
+        else:
+            context["earn"] = "NOT FOUND"
 
         def test_fiftyTwoWeekLow(self):
             self.assertIn("fiftyTwoWeekLow", self.context.get("response").keys())
@@ -52,8 +60,8 @@ class queryTestCase(TestCase):
         def test_MarketCap(self):
             self.assertIn("marketCap", self.context.get("response").keys())
 
-        # def test_earningsQuarterlyGrowth(self):
-        #     self.assertIn("earningsQuarterlyGrowth", self.context.get("response").keys())
+        def test_earningsQuarterlyGrowth(self):
+            self.assertIn("earn", self.context.keys())
 
     except requests.exceptions.RequestException:
         print("API request limit reached")
