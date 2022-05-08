@@ -122,16 +122,24 @@ def search_results(request):
         q = request.POST.get("query")
         url = "https://yfapi.net/v6/finance/quote"
         url2 = "https://yfapi.net/v11/finance/quoteSummary/AAPL?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile"
+        url3 = "https://yfapi.net/v6/finance/recommendationsbysymbol/AAPL"
+
         querystring = {"symbols":q}
         headers = {'x-api-key': "98GOnpY1Ra7sKcK611lldaUO3NE48pIo52DY0DEa"}
-        headers2 = {'x-api-key': "oa8iEji9c49aC1lu8p1t26y9QWZNhQFT6eDT3k6F"}
+        paccwordAnton = {'x-api-key': "oa8iEji9c49aC1lu8p1t26y9QWZNhQFT6eDT3k6F"}
 
         response = requests.request("GET", url, headers=headers, params=querystring)
         context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
-        response2 = requests.request("GET", url2, headers=headers2, params=querystring)
-        temp = { "sum": response2.json()['quoteSummary']['result'][0]['assetProfile']}
-        context.update(temp)
+        responseSummary = requests.request("GET", url2, headers=paccwordAnton, params=querystring)
+        dictSummary = { "sum": responseSummary.json()['quoteSummary']['result'][0]['assetProfile']}
+        context.update(dictSummary)
+        response3 = requests.request("GET", url3, headers=paccwordAnton, params=querystring)
+        dictRecommended = {"recommended": response3.json()['finance']['result'][0]['recommendedSymbols']}
+
+        print(dictRecommended)
+        print('-------------------------------------------')
         print(context)
+        context.update(dictRecommended)
         return render(request, 'base/search_results.html', context)
         
     else:
