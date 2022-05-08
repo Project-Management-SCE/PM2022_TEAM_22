@@ -94,10 +94,12 @@ def change_username(request):
 
     return render(request, "base/change_username.html", {})
 
+
 @login_required(login_url="login")
 def definition(request):
     context = {}
     return render(request, "base/definition.html", context)
+
 
 @login_required(login_url="login")
 def trending(request):
@@ -107,28 +109,35 @@ def trending(request):
     response = requests.request("GET", url, headers=headers)
     temp = response.json()['finance']['result'][0]['quotes']
     arr = []
-    for i,c in enumerate(temp):
+    for i, c in enumerate(temp):
         print(c['symbol'])
         arr.append(c['symbol'])
-    context = {"response":arr}
-    
+    context = {"response": arr}
+
     print(context)
     return render(request, 'base/trending.html', context)
+
 
 @login_required(login_url="login")
 def search_results(request):
     if request.method == "POST":
         q = request.POST.get("query")
         url = "https://yfapi.net/v6/finance/quote"
-        querystring = {"symbols":q}
-        headers = {'x-api-key': "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
+        url2 = "https://yfapi.net/v11/finance/quoteSummary/"+q;
+        querystring = {"symbols": q}
+        querystring2 = {"symbols": q ,"modules":"defaultKeyStatistics"}
+        headers = {'x-api-key': "98GOnpY1Ra7sKcK611lldaUO3NE48pIo52DY0DEa"}
         response = requests.request("GET", url, headers=headers, params=querystring)
-        context = {"query":q,"response":response.json()['quoteResponse']['result'][0]}
-        print(context)
+        response2 = requests.request("GET", url2, headers=headers, params=querystring2)
+        print(response2.json())
+        context = {"query": q, "response": response.json()['quoteResponse']['result'][0],
+                   "response2": response2.json()['quoteSummary']['result'][0]['defaultKeyStatistics']['earningsQuarterlyGrowth']}
+        print(context['response2'])
         return render(request, 'base/search_results.html', context)
-        
+
     else:
         return render(request, 'base/home.html')
+
 
 def home(request):
     # rooms = Room.objects.all()
@@ -146,6 +155,7 @@ def upgrade_vip(request):
     group = Group.objects.get(name="vip")
     request.user.groups.add(group)
     return render(request, "base/upgrade_vip.html")
+
 
 @login_required(login_url="login")
 def upgrade_platinum(request):
