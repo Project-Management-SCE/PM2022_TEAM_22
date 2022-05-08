@@ -52,8 +52,8 @@ class queryTestCase(TestCase):
         def test_MarketCap(self):
             self.assertIn("marketCap", self.context.get("response").keys())
 
-        def test_earningsQuarterlyGrowth(self):
-            self.assertIn("earningsQuarterlyGrowth", self.context.get("response").keys())
+        # def test_earningsQuarterlyGrowth(self):
+        #     self.assertIn("earningsQuarterlyGrowth", self.context.get("response").keys())
 
     except requests.exceptions.HTTPError:
         print("API request limit reached")
