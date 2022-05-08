@@ -1,11 +1,10 @@
-from unittest import result
-from django.forms import forms
+from os import getenv
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 import requests
 
@@ -104,7 +103,7 @@ def definition(request):
 def trending(request):
     context = {}
     url = "https://yfapi.net/v1/finance/trending/US"
-    headers = {"x-api-key": "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
+    headers = {"x-api-key": getenv("API_TOKEN")}
     response = requests.request("GET", url, headers=headers)
     temp = response.json()["finance"]["result"][0]["quotes"]
     arr = []
@@ -124,7 +123,7 @@ def search_results(request):
         url = "https://yfapi.net/v6/finance/quote"
         beta_url = "https://yfapi.net/v11/finance/quoteSummary/" + q + "?lang=en&region=US&modules=defaultKeyStatistics"
         querystring = {"symbols": q}
-        headers = {"x-api-key": "oa8iEji9c49aC1lu8p1t26y9QWZNhQFT6eDT3k6F"}
+        headers = {"x-api-key": getenv("API_TOKEN")}
         response = requests.request("GET", url, headers=headers, params=querystring)
         response_beta = requests.request("GET", beta_url, headers=headers, params=querystring)
         print(response_beta.json())
@@ -134,7 +133,7 @@ def search_results(request):
         print("-----------------------------------")
 
         print(earn)
-        #context["earn"] = earn["fmt"]
+        # context["earn"] = earn["fmt"]
         if beta:
             context["beta"] = beta["raw"]
         else:
@@ -144,15 +143,15 @@ def search_results(request):
         print("-------------******")
         url2 = "https://yfapi.net/v11/finance/quoteSummary/AAPL?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile"
         url3 = "https://yfapi.net/v6/finance/recommendationsbysymbol/AAPL"
-        paccwordAnton = {'x-api-key': "oa8iEji9c49aC1lu8p1t26y9QWZNhQFT6eDT3k6F"}
+        paccwordAnton = {"x-api-key": getenv("API_TOKEN")}
         responseSummary = requests.request("GET", url2, headers=paccwordAnton, params=querystring)
-        dictSummary = { "sum": responseSummary.json()['quoteSummary']['result'][0]['assetProfile']}
+        dictSummary = {"sum": responseSummary.json()["quoteSummary"]["result"][0]["assetProfile"]}
         context.update(dictSummary)
         response3 = requests.request("GET", url3, headers=paccwordAnton, params=querystring)
-        dictRecommended = {"recommended": response3.json()['finance']['result'][0]['recommendedSymbols']}
+        dictRecommended = {"recommended": response3.json()["finance"]["result"][0]["recommendedSymbols"]}
 
         print(dictRecommended)
-        print('-------------------------------------------')
+        print("-------------------------------------------")
         print(context)
         context.update(dictRecommended)
         return render(request, "base/search_results.html", context)
@@ -162,12 +161,8 @@ def search_results(request):
 
 
 def home(request):
-    # rooms = Room.objects.all()
-    # context = {"rooms": rooms}
     context = {}
     return render(request, "base/home.html", context)
-
-
 
 
 @login_required(login_url="login")
