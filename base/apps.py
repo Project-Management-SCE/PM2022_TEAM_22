@@ -9,8 +9,6 @@ class BaseConfig(AppConfig):
         from django.contrib.auth.models import Group
         from dotenv import load_dotenv
 
-        # test
-
         load_dotenv()
         Group.objects.get_or_create(name="vip")
         Group.objects.get_or_create(name="platinum")
