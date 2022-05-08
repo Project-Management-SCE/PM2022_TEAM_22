@@ -8,7 +8,7 @@
 
         <div class="div-stock-info">
                 <h2>Results:</h2>
-                <!-- {% for group in request.user.groups.all %} -->
+                <!-- {% for group in request.user.groups %} -->
                 <!--   {% load humanize %} -->
                 <p style="font-weight: bold;">{{response.shortName}} 52 days low:</p>
                 {% if group.name == 'platinum' %}
@@ -48,23 +48,29 @@
                 <p>You need to be a Platinum user to view this information.</p>
                 {% endif %}
 
+
                 <p style="font-weight: bold;">{{response.shortName}} Current day volume:</p>
+                {% if group.name == 'platinum' %}
                 <p>{{response.regularMarketVolume|intcomma}}$</p>
+                {% else %}
+                <p>You need to be a Platinum user to view this information.</p>
+                {% endif %}
+
+                {% if group.name == 'platinum' %}
                 <p style="font-weight: bold;">{{response.shortName}} Market Capitalization:</p>
                 <p>{{response.marketCap|intcomma}}$</p>
+                {% else %}
+                <p>You need to be a Platinum user to view this information.</p>
+                {% endif %}
 
-                {% elif group.name == 'vip'  or group.name == 'platinum %}
+                {% if group.name == 'vip'  or group.name == 'platinum' %}
                 <p style="font-weight: bold;">Quarterly earnings growth:</p>
-                <p>{{response2.fmt}}</p>
+                <p>{{earn}}</p>
                 {% endif %}
 
 
                 <!-- {% endfor %} -->
-                <!-- {% if group.name == 'vip' or group.name == 'platinum' %}
-                <p style="font-weight: bold;">Market Capitalization:</p>
-                {% load humanize %} <!-- ADDS COMMAS TO NUMBER -->
-                <!-- <p>{{response.marketCap|intcomma}}</p> -->
-                <!-- {% endif %} -->
+
 
         </div>
 </div>

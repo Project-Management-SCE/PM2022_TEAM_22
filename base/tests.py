@@ -42,3 +42,12 @@ class queryTestCase(TestCase):
 
     def test_regularMarketDayHigh(self):
         self.assertIn("regularMarketDayHigh", self.context.get('response').keys())
+
+    def test_DayVolume(self):
+        self.assertIn("regularMarketVolume", self.context.get('response').keys())
+
+    def test_MarketCap(self):
+        self.assertIn("marketCap", self.context.get('response').keys())
+
+    def test_earningsQuarterlyGrowth(self):
+        self.assertIn("earningsQuarterlyGrowth", self.context.get('response').keys())

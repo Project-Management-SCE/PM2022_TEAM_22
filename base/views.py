@@ -122,28 +122,22 @@ def search_results(request):
         url = "https://yfapi.net/v6/finance/quote"
         beta_url = "https://yfapi.net/v11/finance/quoteSummary/" + q + "?lang=en&region=US&modules=defaultKeyStatistics"
         querystring = {"symbols": q}
-        headers = {"x-api-key": "ApZwcHsGrP61HuHhnQFFA8ql5Va54RQt1cZqmkhV"}
-        url2 = "https://yfapi.net/v11/finance/quoteSummary/"+q;
-        querystring2 = {"symbols": q ,"modules":"defaultKeyStatistics"}
-        headers = {'x-api-key': "98GOnpY1Ra7sKcK611lldaUO3NE48pIo52DY0DEa"}
+        headers = {"x-api-key": "98GOnpY1Ra7sKcK611lldaUO3NE48pIo52DY0DEa"}
         response = requests.request("GET", url, headers=headers, params=querystring)
-        response2 = requests.request("GET", url2, headers=headers, params=querystring2)
         response_beta = requests.request("GET", beta_url, headers=headers, params=querystring)
-        context = {"query": q, "response": response.json()["quoteResponse"]["result"][0], "response2": response2.json()['quoteSummary']['result'][0]['defaultKeyStatistics']['earningsQuarterlyGrowth']}
+        print(response_beta.json())
+        context = {"query": q, "response": response.json()["quoteResponse"]["result"][0]}
+        earn = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["earningsQuarterlyGrowth"]
         beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
-
+        print(earn)
+        context["earn"] = earn["fmt"]
         if(beta):
-            context["beta"] = beta["raw"]
+           context["beta"] = beta["raw"]
         else:
             context["beta"] = "NOT FOUND"
+
         print(context)
         return render(request, "base/search_results.html", context)
-
-
-        context = {"query": q, "response": response.json()['quoteResponse']['result'][0],
-                   "response2": response2.json()['quoteSummary']['result'][0]['defaultKeyStatistics']['earningsQuarterlyGrowth']}
-        print(context['response2'])
-        return render(request, 'base/search_results.html', context)
 
     else:
         return render(request, "base/home.html")
