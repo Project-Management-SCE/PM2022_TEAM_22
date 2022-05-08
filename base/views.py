@@ -116,6 +116,7 @@ def trending(request):
     return render(request, "base/trending.html", context)
 
 
+# test
 @login_required(login_url="login")
 def search_results(request):
     if request.method == "POST":
