@@ -8,26 +8,63 @@
 
         <div class="div-stock-info">
                 <h2>Results:</h2>
-                {% for group in request.user.groups.all %}
-                 {% if group.name == 'platinum' %}
-                         {% load humanize %}
-                         <p style="font-weight: bold;">{{response.shortName}} 52 days low:</p>
-                         <p>{{response.fiftyTwoWeekLow}}$</p>
-                         <p style="font-weight: bold;">{{response.shortName}} 52 days high:</p>
-                         <p>{{response.fiftyTwoWeekHigh}}$</p>
-                         <p style="font-weight: bold;">{{response.shortName}} Current day volume:</p>
-                         <p>{{response.regularMarketVolume|intcomma}}$</p>
-                         <p style="font-weight: bold;">{{response.shortName}} Market Capitalization:</p>
-                         <p>{{response.marketCap|intcomma}}$</p>
+                <!-- {% for group in request.user.groups.all %} -->
+                <!--   {% load humanize %} -->
+                <p style="font-weight: bold;">{{response.shortName}} 52 days low:</p>
+                {% if group.name == 'platinum' %}
+                <p>{{response.fiftyTwoWeekLow}}$</p>
+                {% else %}
+                <p>You need to be a Platinum user to view this information.</p>
+                {% endif %}
 
-                 {% elif group.name == 'vip' %}
-                 <p style="font-weight: bold;">Quarterly earnings growth:</p>
-                 <p>{{response2.fmt}}</p>
-                 {% endif %}
-
+                <p style="font-weight: bold;">{{response.shortName}} 52 days high:</p>
+                {% if group.name == 'platinum' %}
+                <p>{{response.fiftyTwoWeekHigh}}$</p>
+                {% else %}
+                <p>You need to be a Platinum user to view this information.</p>
+                {% endif %}
 
 
-                {% endfor %}
+                <p style="font-weight: bold;">{{response.shortName}} beta:</p>
+                {% if group.name == 'platinum' %}
+                <p>{{beta}}</p>
+                {% else %}
+                <p>You need to be a Platinum user to view this information.</p>
+                {% endif %}
+
+
+                <p style="font-weight: bold;">{{response.shortName}} day low:</p>
+                {% if group.name == 'platinum' %}
+                <p>{{response.regularMarketDayLow}}$</p>
+                {% else %}
+                <p>You need to be a Platinum user to view this information.</p>
+                {% endif %}
+
+
+                <p style="font-weight: bold;">{{response.shortName}} day high:</p>
+                {% if group.name == 'platinum' %}
+                <p>{{response.regularMarketDayHigh}}$</p>
+                {% else %}
+                <p>You need to be a Platinum user to view this information.</p>
+                {% endif %}
+
+                <p style="font-weight: bold;">{{response.shortName}} Current day volume:</p>
+                <p>{{response.regularMarketVolume|intcomma}}$</p>
+                <p style="font-weight: bold;">{{response.shortName}} Market Capitalization:</p>
+                <p>{{response.marketCap|intcomma}}$</p>
+
+                {% elif group.name == 'vip'  or group.name == 'platinum %}
+                <p style="font-weight: bold;">Quarterly earnings growth:</p>
+                <p>{{response2.fmt}}</p>
+                {% endif %}
+
+
+                <!-- {% endfor %} -->
+                <!-- {% if group.name == 'vip' or group.name == 'platinum' %}
+                <p style="font-weight: bold;">Market Capitalization:</p>
+                {% load humanize %} <!-- ADDS COMMAS TO NUMBER -->
+                <!-- <p>{{response.marketCap|intcomma}}</p> -->
+                <!-- {% endif %} -->
 
         </div>
 </div>
