@@ -68,15 +68,11 @@
                 <p>{{earn}}</p>
                 {% endif %}
 
-
-                <!-- {% endfor %} -->
-
-                {% for group in request.user.groups.all %}
-                {% if group.name == 'platinum' %}
                 <h2>the percentage changed in price since the previous trading day:</h2>
+                {% if group.name == 'platinum' %}
                 <p>{{response.regularMarketChangePercent}}%</p>
                 <h2>summary:</h2>
-                <textarea cols="100" rows="15">{{sum.longBusinessSummary}}%</textarea>
+                <p class="summary">{{sum.longBusinessSummary}}</p>
                 <p style="font-weight: bold;">best stocks Score:</p>
                 <p>
                         {% for temp in recommended %}
