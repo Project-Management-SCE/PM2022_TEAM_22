@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sh '''#!/bin/bash
                  apt-get update
-                 apt-get install python3-dev libpq-dev
+                 apt-get install libpq-dev python3-dev
                  python -m venv env
                  source env/bin/activate
                  python -m pip install --upgrade pip
