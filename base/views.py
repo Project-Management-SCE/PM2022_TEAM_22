@@ -77,10 +77,8 @@ def change_password(request):
 # change user name (not finished)
 @login_required(login_url="login")
 def change_username(request):
-    print("hello")
     if request.method == "POST":
         new_username = request.POST.get("username")
-        print(new_username)
         if User.objects.filter(username=new_username).exists():
             messages.error(request, "Username already exists.")
             return render(request, "base/change_username.html", {})
@@ -108,11 +106,9 @@ def trending(request):
     temp = response.json()["finance"]["result"][0]["quotes"]
     arr = []
     for i, c in enumerate(temp):
-        print(c["symbol"])
         arr.append(c["symbol"])
     context = {"response": arr}
 
-    print(context)
     return render(request, "base/trending.html", context)
 
 
@@ -127,21 +123,16 @@ def search_results(request):
         headers = {"x-api-key": getenv("API_TOKEN")}
         response = requests.request("GET", url, headers=headers, params=querystring)
         response_beta = requests.request("GET", beta_url, headers=headers, params=querystring)
-        print(response_beta.json())
         context = {"query": q, "response": response.json()["quoteResponse"]["result"][0]}
         earn = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["earningsQuarterlyGrowth"]
         beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
-        print("-----------------------------------")
 
-        print(earn)
         # context["earn"] = earn["fmt"]
         if beta:
             context["beta"] = beta["raw"]
         else:
             context["beta"] = "NOT FOUND"
 
-        print(context)
-        print("-------------******")
         url2 = "https://yfapi.net/v11/finance/quoteSummary/AAPL?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile"
         url3 = "https://yfapi.net/v6/finance/recommendationsbysymbol/AAPL"
         paccwordAnton = {"x-api-key": getenv("API_TOKEN")}
@@ -151,9 +142,6 @@ def search_results(request):
         response3 = requests.request("GET", url3, headers=paccwordAnton, params=querystring)
         dictRecommended = {"recommended": response3.json()["finance"]["result"][0]["recommendedSymbols"]}
 
-        print(dictRecommended)
-        print("-------------------------------------------")
-        print(context)
         context.update(dictRecommended)
         return render(request, "base/search_results.html", context)
 

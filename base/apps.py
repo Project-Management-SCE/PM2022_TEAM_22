@@ -1,4 +1,12 @@
 from django.apps import AppConfig
+from django.db.models.signals import post_migrate
+
+
+def create_groups(sender, **kwargs):
+    from django.contrib.auth.models import Group
+
+    Group.objects.get_or_create(name="vip")
+    Group.objects.get_or_create(name="platinum")
 
 
 class BaseConfig(AppConfig):
@@ -6,9 +14,7 @@ class BaseConfig(AppConfig):
     name = "base"
 
     def ready(self):
-        from django.contrib.auth.models import Group
         from dotenv import load_dotenv
 
+        post_migrate.connect(create_groups, sender=self)
         load_dotenv()
-        Group.objects.get_or_create(name="vip")
-        Group.objects.get_or_create(name="platinum")

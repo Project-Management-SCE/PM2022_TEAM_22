@@ -82,8 +82,12 @@ WSGI_APPLICATION = "stockify.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "kdbgvxof",
+        "USER": "kdbgvxof",
+        "PASSWORD": "a0PMlX9kvQZri474xFXDu1-f28isRiuy",
+        "HOST": "rogue.db.elephantsql.com",
+        "PORT": "5432",
     }
 }
 
