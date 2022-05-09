@@ -9,8 +9,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''#!/bin/bash
-                 apt update
-                 apt install python3-dev libpq-dev
+                 apt-get update
+                 apt-get install python3-dev libpq-dev
                  python -m venv env
                  source env/bin/activate
                  python -m pip install --upgrade pip
