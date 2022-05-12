@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "base.apps.BaseConfig",
     "django.contrib.humanize",
 ]
