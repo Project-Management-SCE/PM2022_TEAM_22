@@ -60,6 +60,7 @@ def registerPage(request):
 
 @login_required(login_url="login")
 def change_password(request):
+    # test
     if request.method == "POST":
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
