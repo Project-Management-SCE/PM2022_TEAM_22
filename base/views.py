@@ -127,7 +127,7 @@ def search_results(request):
         earn = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["earningsQuarterlyGrowth"]
         beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
 
-        # context["earn"] = earn["fmt"]
+        context["earn"] = earn["fmt"]
         if beta:
             context["beta"] = beta["raw"]
         else:
