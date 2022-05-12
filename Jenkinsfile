@@ -9,6 +9,8 @@ pipeline {
         stage('Install Linux Libraries') {
             steps {
                 sh '''#!/bin/bash
+                 apt-get update
+                 apt-get install python-apt
                  python scripts/install_linux_deps.py
          '''
             }
