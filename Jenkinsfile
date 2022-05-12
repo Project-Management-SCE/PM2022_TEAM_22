@@ -33,6 +33,15 @@ pipeline {
          '''
             }
         }
+
+        stage('Deploy') {
+            steps {
+                sh '''#!/bin/bash
+                 curl https://cli-assets.heroku.com/install.sh | sh;
+                 heroku container:login
+         '''
+            }
+        }
     }
 }
 
