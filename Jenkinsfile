@@ -6,14 +6,6 @@ pipeline {
                 }
     }
     stages {
-        stage('Install Linux Libraries') {
-            steps {
-                sh '''#!/bin/bash
-                 apt-get update
-                 apt-get install libpq-dev python3-dev build-essential -y
-         '''
-            }
-        }
         stage('Install Python Dependencies') {
             steps {
                 sh '''#!/bin/bash
