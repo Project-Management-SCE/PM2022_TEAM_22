@@ -10,8 +10,21 @@ pipeline {
             steps {
                 sh '''#!/bin/bash
                  apt-get update
-                 apt-get install python-apt
-                 python scripts/install_linux_deps.py
+
+                 if [ $(dpkg-query -W -f="${Status}" libpq-dev 2>/dev/null | grep -c "ok installed") -eq 0 ];
+                    then
+                    apt-get install libpq-dev;
+                    fi
+
+                if [ $(dpkg-query -W -f="${Status}" python3-dev 2>/dev/null | grep -c "ok installed") -eq 0 ];
+                    then
+                    apt-get install python3-dev;
+                    fi
+
+                if [ $(dpkg-query -W -f="${Status}" build-essential 2>/dev/null | grep -c "ok installed") -eq 0 ];
+                    then
+                    apt-get install build-essential;
+                    fi
          '''
             }
         }
@@ -44,4 +57,3 @@ pipeline {
         }
     }
 }
-
