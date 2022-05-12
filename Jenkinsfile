@@ -35,10 +35,16 @@ pipeline {
         }
 
         stage('Deploy') {
+            agent {
+                docker {
+                    image 'cimg/base:stable'
+                    args '-u root'
+                }
+            }
             steps {
                 sh '''#!/bin/bash
                  curl https://cli-assets.heroku.com/install.sh | sh;
-                 git push heroku master
+                 heroku container:login
          '''
             }
         }
