@@ -9,8 +9,7 @@ pipeline {
         stage('Install Linux Libraries') {
             steps {
                 sh '''#!/bin/bash
-                 apt-get update
-                 apt-get install libpq-dev python3-dev build-essential -y
+                 python scripts/install_linux_deps.py
          '''
             }
         }
