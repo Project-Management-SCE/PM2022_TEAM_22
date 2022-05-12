@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "base.apps.BaseConfig",
     "django.contrib.humanize",
-    "whitenoise.middleware.WhiteNoiseMiddleware"
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+        "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
