@@ -1,2 +1,2 @@
-web: python manage.py runserver
+web: gunicorn stockify.wsgi
 release: python manage.py migrate
