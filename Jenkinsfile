@@ -13,17 +13,17 @@ pipeline {
 
                  if [ $(dpkg-query -W -f="${Status}" libpq-dev 2>/dev/null | grep -c "ok installed") -eq 0 ];
                     then
-                        apt-get install libpq-dev;
+                        apt-get install libpq-dev -y;
                     fi
 
                 if [ $(dpkg-query -W -f="${Status}" python3-dev 2>/dev/null | grep -c "ok installed") -eq 0 ];
                     then
-                        apt-get install python3-dev;
+                        apt-get install python3-dev -y;
                     fi
 
                 if [ $(dpkg-query -W -f="${Status}" build-essential 2>/dev/null | grep -c "ok installed") -eq 0 ];
                     then
-                        apt-get install build-essential;
+                        apt-get install build-essential -y;
                     fi
          '''
             }
