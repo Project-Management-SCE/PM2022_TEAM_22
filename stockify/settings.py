@@ -28,7 +28,8 @@ SECRET_KEY = "django-insecure-v4f!ai)st0_u7adu=e+)o!945i=dnbs!mf^!=y3+jh2lbo&(21
 DEBUG = False if os.getenv("DEBUG") == "FALSE" else True
 
 
-ALLOWED_HOSTS = ["gentle-temple-64246.herokuapp.com", "127.0.0.1"]
+ALLOWED_HOSTS = [".herokuapp.com", "127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ["https://*.herokuapp.com"]
 
 
 # Application definition
