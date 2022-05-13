@@ -33,10 +33,18 @@ pipeline {
             }
         }
         stage('Deploy') {
+            agent {
+                docker {
+                    image 'cimg/base:stable'
+                    args '-u root'
+                }
+            }
             steps {
                 sh '''#!/bin/bash
                  curl https://cli-assets.heroku.com/install.sh | sh;
-                 heroku logs -a gentle-temple-64246
+                 heroku container:login
+                 heroku container:push web -a gentle-temple-64246
+                 heroku container:release web -a gentle-temple-64246
          '''
             }
         }
