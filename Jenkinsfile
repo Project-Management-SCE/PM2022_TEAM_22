@@ -39,9 +39,8 @@ pipeline {
                 }
             }
         }
-    }
 
-        stage('Deploy') {
+                stage('Deploy') {
             agent {
                 docker {
                     image 'cimg/base:stable'
@@ -56,5 +55,6 @@ pipeline {
                  heroku container:release web -a gentle-temple-64246
          '''
             }
-        }
+                }
+    }
 }
