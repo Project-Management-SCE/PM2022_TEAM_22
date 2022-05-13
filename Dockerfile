@@ -11,6 +11,7 @@ RUN pip install -r requirements.txt
 
 
 COPY . .
+RUN python manage.py collectstatic --noinput --clear
 RUN useradd myuser
 USER myuser
 CMD gunicorn stockify.wsgi:application
