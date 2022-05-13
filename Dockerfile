@@ -13,6 +13,8 @@ RUN pip install -r requirements.txt
 
 
 COPY . .
-RUN adduser -D myuser
-USER myuser
+RUN addgroup --system django \
+    && adduser --system --ingroup django django
+RUN chown -R django:django /app
+USER django
 CMD gunicorn stockify.wsgi:application
