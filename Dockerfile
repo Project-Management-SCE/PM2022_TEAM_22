@@ -3,5 +3,4 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     python3-dev \
     build-essential \
-    curl \
-    git
+    curl
