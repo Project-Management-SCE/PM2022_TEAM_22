@@ -13,6 +13,6 @@ RUN pip install -r requirements.txt
 
 
 COPY . .
-RUN useradd myapp
+RUN useradd myuser
 USER myuser
 CMD gunicorn stockify.wsgi:application
