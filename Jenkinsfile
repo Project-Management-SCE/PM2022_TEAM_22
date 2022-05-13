@@ -21,7 +21,6 @@ pipeline {
                 sh '''#!/bin/bash
                  source env/bin/activate
                  coverage run --source='base' manage.py test
-
          '''
             }
         }
@@ -30,6 +29,13 @@ pipeline {
                 sh '''#!/bin/bash
                  source env/bin/activate
                  coverage report
+         '''
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh '''#!/bin/bash
+                 heroku login
          '''
             }
         }
