@@ -8,10 +8,10 @@ pipeline {
         stage('Install Python Dependencies') {
                 agent {
                 dockerfile {
-                    filename dockerFileName
-                    args dockerFileArgs
+                    filename "$dockerFileName"
+                    args "$dockerFileArgs"
                 }
-                }
+            }
             steps {
                 sh '''#!/bin/bash
                  python -m venv env
@@ -24,8 +24,8 @@ pipeline {
         stage('Tests') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile.build'
-                    args '-u root:root'
+                    filename "$dockerFileName"
+                    args "$dockerFileArgs"
                 }
             }
             steps {
@@ -38,8 +38,8 @@ pipeline {
         stage('Coverage Report') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile.build'
-                    args '-u root:root'
+                    filename "$dockerFileName"
+                    args "$dockerFileArgs"
                 }
             }
             steps {
