@@ -1,5 +1,5 @@
 
-String  dockerFileName = 'Dockerfile.build'
+String dockerFileName = 'Dockerfile.build'
 String dockerFileArgs = '-u root:root'
 
 pipeline {
@@ -8,8 +8,8 @@ pipeline {
         stage('Install Python Dependencies') {
                 agent {
                 dockerfile {
-                    filename "$dockerFileName"
-                    args "$dockerFileArgs"
+                    filename dockerFileName
+                    args dockerFileArgs
                 }
                 }
             steps {
