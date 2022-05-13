@@ -55,8 +55,7 @@ pipeline {
             steps {
                 sh '''#!/bin/bash
                  curl https://cli-assets.heroku.com/install.sh | sh;
-                 heroku git:remote -a gentle-temple-64246
-                 git push heroku master
+                 heroku container:login
          '''
             }
         }
