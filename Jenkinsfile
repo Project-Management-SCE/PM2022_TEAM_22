@@ -1,13 +1,17 @@
+
+String  dockerFileName = 'Dockerfile.build'
+String dockerFileArgs = '-u root:root'
+
 pipeline {
     agent none
     stages {
         stage('Install Python Dependencies') {
                 agent {
                 dockerfile {
-                    filename 'Dockerfile.build'
-                    args '-u root:root'
+                    filename "$dockerFileName"
+                    args "$dockerFileArgs"
                 }
-            }
+                }
             steps {
                 sh '''#!/bin/bash
                  python -m venv env
