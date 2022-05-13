@@ -4,7 +4,7 @@ pipeline {
         stage('Install Python Dependencies') {
                 agent {
                 dockerfile {
-                    filename 'Dockerfile'
+                    filename 'Dockerfile.build'
                     args '-u root:root'
                 }
             }
@@ -20,7 +20,7 @@ pipeline {
         stage('Tests') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile'
+                    filename 'Dockerfile.build'
                     args '-u root:root'
                 }
             }
@@ -34,7 +34,7 @@ pipeline {
         stage('Coverage Report') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile'
+                    filename 'Dockerfile.build'
                     args '-u root:root'
                 }
             }
