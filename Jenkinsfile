@@ -1,12 +1,13 @@
 pipeline {
-    agent {
+    agent none
+    stages {
+        stage('Install Python Dependencies') {
+                agent {
                 dockerfile {
                     filename 'Dockerfile.build'
                     args '-u root:root'
                 }
-    }
-    stages {
-        stage('Install Python Dependencies') {
+            }
             steps {
                 sh '''#!/bin/bash
                  python -m venv env
@@ -17,6 +18,12 @@ pipeline {
             }
         }
         stage('Tests') {
+            agent {
+                dockerfile {
+                    filename 'Dockerfile.build'
+                    args '-u root:root'
+                }
+            }
             steps {
                 sh '''#!/bin/bash
                  source env/bin/activate
@@ -25,6 +32,12 @@ pipeline {
             }
         }
         stage('Coverage Report') {
+            agent {
+                dockerfile {
+                    filename 'Dockerfile.build'
+                    args '-u root:root'
+                }
+            }
             steps {
                 sh '''#!/bin/bash
                  source env/bin/activate
