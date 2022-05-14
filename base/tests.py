@@ -66,6 +66,9 @@ class queryTestCase(TestCase):
 
         def test_earningsQuarterlyGrowth(self):
             self.assertIn("earn", self.context.keys())
+        
+        def test_marketLocation(self):
+            self.assertIn("market", self.context.get("response").keys())
 
     except (requests.exceptions.RequestException, KeyError) as e:
         print(e)
