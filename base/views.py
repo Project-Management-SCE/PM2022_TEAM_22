@@ -133,8 +133,8 @@ def search_results(request):
         else:
             context["beta"] = "NOT FOUND"
 
-        url2 = "https://yfapi.net/v11/finance/quoteSummary/AAPL?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile"
-        url3 = "https://yfapi.net/v6/finance/recommendationsbysymbol/AAPL"
+        url2 = f"https://yfapi.net/v11/finance/quoteSummary/{q}?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile"
+        url3 = f"https://yfapi.net/v6/finance/recommendationsbysymbol/{q}"
         paccwordAnton = {"x-api-key": getenv("API_TOKEN")}
         responseSummary = requests.request("GET", url2, headers=paccwordAnton, params=querystring)
         dictSummary = {"sum": responseSummary.json()["quoteSummary"]["result"][0]["assetProfile"]}
