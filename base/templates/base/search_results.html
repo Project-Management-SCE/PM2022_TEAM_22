@@ -78,11 +78,11 @@
                 {% endif %}
 
                 <p style="font-weight: bold;">Market location:</p>
-                <!-- {% if group.name == 'vip' or group.name == 'platinum' %} -->
+                {% if group.name == 'vip' or group.name == 'platinum' %}
                 <p>{{response.market}}</p>
-                <!-- {% else %} -->
-                <!-- <p>You need to be a VIP / Platinum user to view this information.</p> -->
-                <!-- {% endif %} -->
+                {% else %}
+                <p>You need to be a VIP / Platinum user to view this information.</p>
+                {% endif %}
 
                 <p style="font-weight: bold;">Summary:</p>
                 {% if group.name == 'platinum' %}
