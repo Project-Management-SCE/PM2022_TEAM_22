@@ -63,27 +63,40 @@
                 <p>You need to be a Platinum user to view this information.</p>
                 {% endif %}
 
-                {% if group.name == 'vip' or group.name == 'platinum' %}
                 <p style="font-weight: bold;">Quarterly earnings growth:</p>
+                {% if group.name == 'vip' or group.name == 'platinum' %}
                 <p>{{earn}}</p>
+                {% else %}
+                <p>You need to be a VIP / Platinum user to view this information.</p>
                 {% endif %}
 
-                <h2>the percentage changed in price since the previous trading day:</h2>
+                <p style="font-weight: bold;">Percentage changed in price since the previous trading day:</p>
                 {% if group.name == 'platinum' %}
                 <p>{{response.regularMarketChangePercent}}%</p>
-                <h2>Summary:</h2>
-                <p p style="font-weight: bold;">
+                {% else %}
+                <p>You need to be a Platinum user to view this information.</p>
+                {% endif %}
+
+                <p style="font-weight: bold;">Market location:</p>
+                {% if group.name == 'vip' or group.name == 'platinum' %}
+                <p>{{response.market}}</p>
+                {% else %}
+                <p>You need to be a VIP / Platinum user to view this information.</p>
+                {% endif %}
+
+                <p style="font-weight: bold;">Summary:</p>
+                {% if group.name == 'platinum' %}
                 <p class="summary">{{sum.longBusinessSummary}}</p>
+                {% else %}
+                <p>You need to be a VIP / Platinum user to view this information.</p>
+                {% endif %}
+
                 <p style="font-weight: bold;">best stocks Score:</p>
-                <p>
-                        {% for temp in recommended %}
+                {% for temp in recommended %}
                 <p>{{temp.symbol}}--{{temp.score}}</p>
 
                 {% endfor %}
-                {% endif %}
-
-                {%endfor%}
-
+                {% endfor %}
         </div>
 </div>
 
