@@ -51,6 +51,8 @@ pipeline {
                  source env/bin/activate
                  coverage report
                  deactivate
+                 py3clean .
+                 rm -rf env
          '''
             }
         }
