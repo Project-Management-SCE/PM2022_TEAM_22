@@ -24,12 +24,6 @@ pipeline {
                     }
                 }
                 stage('Tests') {
-                    agent {
-                        dockerfile {
-                            filename "$dockerFileName"
-                            args "$dockerFileArgs"
-                        }
-                    }
                     steps {
                         sh '''#!/bin/bash
                  source env/bin/activate
@@ -38,12 +32,6 @@ pipeline {
                     }
                 }
                 stage('Coverage Report') {
-                    agent {
-                        dockerfile {
-                            filename "$dockerFileName"
-                            args "$dockerFileArgs"
-                        }
-                    }
                     steps {
                         sh '''#!/bin/bash
                  source env/bin/activate
