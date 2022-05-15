@@ -49,12 +49,7 @@ pipeline {
          '''
             }
         }
-    }
 
-            post {
-            always {
-                deleteDir()
-            }
-        }
+    }
 }
 
