@@ -14,10 +14,12 @@ pipeline {
             }
             steps {
                 sh '''#!/bin/bash
+                 py3clean .
                  python -m venv env
                  source env/bin/activate
                  python -m pip install --upgrade pip
                  pip install -r requirements.txt
+                 deactivate
          '''
             }
         }
@@ -32,6 +34,7 @@ pipeline {
                 sh '''#!/bin/bash
                  source env/bin/activate
                  coverage run --source='base' manage.py test
+                 deactivate
          '''
             }
         }
@@ -46,6 +49,7 @@ pipeline {
                 sh '''#!/bin/bash
                  source env/bin/activate
                  coverage report
+                 deactivate
          '''
             }
         }
