@@ -15,7 +15,7 @@ pipeline {
             steps {
                 sh '''#!/bin/bash
                  py3clean .
-                 rm -r env
+                 rm -rf env
                  python -m venv env
                  source env/bin/activate
                  python -m pip install --upgrade pip
