@@ -14,7 +14,6 @@ pipeline {
             }
             steps {
                 sh '''#!/bin/bash
-                 deleteDir()
                  python -m venv env
                  source env/bin/activate
                  python -m pip install --upgrade pip
