@@ -11,7 +11,7 @@ pipeline {
                     filename "$dockerFileName"
                     args "$dockerFileArgs"
                 }
-            }
+                }
             steps {
                 sh '''#!/bin/bash
                  python -m venv env
@@ -46,6 +46,20 @@ pipeline {
                 sh '''#!/bin/bash
                  source env/bin/activate
                  coverage report
+         '''
+            }
+        }
+        stage('count LOC') {
+            agent {
+                dockerfile {
+                    filename "$dockerFileName"
+                    args "$dockerFileArgs"
+                }
+            }
+
+            steps {
+                sh '''#!/bin/bash
+                 cloc ./
          '''
             }
         }
