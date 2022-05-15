@@ -8,8 +8,8 @@ pipeline {
         stage('Install Python Dependencies') {
                 agent {
                 dockerfile {
-                    filename "$dockerFileName"
-                    args "$dockerFileArgs"
+                    filename dockerFileName
+                    args dockerFileArgs
                 }
             }
             steps {
