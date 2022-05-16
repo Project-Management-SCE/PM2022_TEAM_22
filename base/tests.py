@@ -1,3 +1,4 @@
+from os import getenv
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Favorite
@@ -22,7 +23,7 @@ class queryTestCase(TestCase):
     beta_url = "https://yfapi.net/v11/finance/quoteSummary/" + q + "?lang=en&region=US&modules=defaultKeyStatistics"
     recommendUrl = "https://yfapi.net/v6/finance/recommendationsbysymbol/" + q
     querystring = {"symbols": q}
-    headers = {"x-api-key": "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
+    headers = {"x-api-key": getenv("API_TOKEN")}
     try:
         response = requests.request("GET", url, headers=headers, params=querystring)
         response_beta = requests.request("GET", beta_url, headers=headers, params=querystring)
