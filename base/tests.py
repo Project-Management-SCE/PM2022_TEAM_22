@@ -20,7 +20,7 @@ class queryTestCase(TestCase):
     q = "msft"
     url = "https://yfapi.net/v6/finance/quote"
     beta_url = "https://yfapi.net/v11/finance/quoteSummary/" + q + "?lang=en&region=US&modules=defaultKeyStatistics"
-    recommendUrl = "https://yfapi.net/v6/finance/recommendationsbysymbol/AAPL"
+    recommendUrl = "https://yfapi.net/v6/finance/recommendationsbysymbol/" + q
     querystring = {"symbols": q}
     headers = {"x-api-key": "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
     try:
