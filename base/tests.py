@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Favorite
 import requests
-
+from django.urls import reverse
 
 # Create your tests here.
 class FavoriteTestCase(TestCase):
@@ -75,39 +75,39 @@ class queryTestCase(TestCase):
     except (requests.exceptions.RequestException, KeyError) as e:
         print(e)
 
-# class templateTestCase(TestCase):
-#     try:
-#         def test_url_template_about(self): #Checking redirection
-#             response = self.client.get(reverse("about"))
-#             self.assertEqual(response.status_code, 302)
+class templateTestCase(TestCase):
+    try:
+        def test_url_template_about(self): #Checking redirection
+            response = self.client.get(reverse("about"))
+            self.assertEqual(response.status_code, 302)
         
-#         def test_url_template_change_password(self): #Checking redirection
-#             response = self.client.get(reverse("change_password"))
-#             self.assertEqual(response.status_code, 302)
+        def test_url_template_change_password(self): #Checking redirection
+            response = self.client.get(reverse("change_password"))
+            self.assertEqual(response.status_code, 302)
 
-#         def test_url_template_change_username(self): #Checking redirection
-#             response = self.client.get(reverse("change_username"))
-#             self.assertEqual(response.status_code, 302)
+        def test_url_template_change_username(self): #Checking redirection
+            response = self.client.get(reverse("change_username"))
+            self.assertEqual(response.status_code, 302)
 
-#         def test_url_template_definition(self): #Checking redirection
-#             response = self.client.get(reverse("definition"))
-#             self.assertEqual(response.status_code, 302)
+        def test_url_template_definition(self): #Checking redirection
+            response = self.client.get(reverse("definition"))
+            self.assertEqual(response.status_code, 302)
 
-#         def test_url_template_home(self): # Checking url
-#             response = self.client.get(reverse("home"))
-#             self.assertEqual(response.status_code, 200)
+        def test_url_template_home(self): # Checking url
+            response = self.client.get(reverse("home"))
+            self.assertEqual(response.status_code, 200)
 
-#         def test_url_template_login_register(self): #Checking url
-#             response = self.client.get(reverse("login"))
-#             self.assertEqual(response.status_code, 200)
+        def test_url_template_login_register(self): #Checking url
+            response = self.client.get(reverse("login"))
+            self.assertEqual(response.status_code, 200)
         
-#         def test_url_template_login_register(self): #Checking url
-#             response = self.client.get(reverse("register"))
-#             self.assertEqual(response.status_code, 200)
+        def test_url_template_login_register(self): #Checking url
+            response = self.client.get(reverse("register"))
+            self.assertEqual(response.status_code, 200)
 
-#         def test_url_template_trending(self): #Checking redirection
-#             response = self.client.get(reverse("trending"))
-#             self.assertEqual(response.status_code, 302)
+        def test_url_template_trending(self): #Checking redirection
+            response = self.client.get(reverse("trending"))
+            self.assertEqual(response.status_code, 302)
 
-#     except (requests.exceptions.RequestException, KeyError) as e:
-#         print(e)
+    except (requests.exceptions.RequestException, KeyError) as e:
+        print(e)
