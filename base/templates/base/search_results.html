@@ -84,6 +84,10 @@
                 <p>You need to be a VIP / Platinum user to view this information.</p>
                 {% endif %}
 
+                <p style="font-weight: bold;">Currency:</p>
+                <p>{{response.currency}}</p>
+
+
                 <p style="font-weight: bold;">Summary:</p>
                 {% if group.name == 'platinum' %}
                 <p class="summary">{{sum.longBusinessSummary}}</p>
