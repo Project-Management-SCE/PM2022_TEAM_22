@@ -71,6 +71,8 @@ class queryTestCase(TestCase):
         def test_marketLocation(self):
             self.assertIn("market", self.context.get("response").keys())
 
+        def test_Currency(self):
+            self.assertIn("currency", self.context.get("response").keys())
 
 
     except (requests.exceptions.RequestException, KeyError) as e:
