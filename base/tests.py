@@ -1,8 +1,9 @@
+from os import getenv
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Favorite
 import requests
-
+from django.urls import reverse
 
 # Create your tests here.
 class FavoriteTestCase(TestCase):
@@ -20,9 +21,9 @@ class queryTestCase(TestCase):
     q = "msft"
     url = "https://yfapi.net/v6/finance/quote"
     beta_url = "https://yfapi.net/v11/finance/quoteSummary/" + q + "?lang=en&region=US&modules=defaultKeyStatistics"
-    recommendUrl = "https://yfapi.net/v6/finance/recommendationsbysymbol/AAPL"
+    recommendUrl = "https://yfapi.net/v6/finance/recommendationsbysymbol/" + q
     querystring = {"symbols": q}
-    headers = {"x-api-key": "3KPyUUzNRS8O1o5sTVrip2ZZlRkxu5UP5gxgVscR"}
+    headers = {"x-api-key": getenv("API_TOKEN")}
     try:
         response = requests.request("GET", url, headers=headers, params=querystring)
         response_beta = requests.request("GET", beta_url, headers=headers, params=querystring)
@@ -69,6 +70,47 @@ class queryTestCase(TestCase):
         
         def test_marketLocation(self):
             self.assertIn("market", self.context.get("response").keys())
+
+        def test_Currency(self):
+            self.assertIn("currency", self.context.get("response").keys())
+
+
+    except (requests.exceptions.RequestException, KeyError) as e:
+        print(e)
+
+class templateTestCase(TestCase):
+    try:
+        def test_url_template_about(self): #Checking redirection
+            response = self.client.get(reverse("about"))
+            self.assertEqual(response.status_code, 302)
+        
+        def test_url_template_change_password(self): #Checking redirection
+            response = self.client.get(reverse("change_password"))
+            self.assertEqual(response.status_code, 302)
+
+        def test_url_template_change_username(self): #Checking redirection
+            response = self.client.get(reverse("change_username"))
+            self.assertEqual(response.status_code, 302)
+
+        def test_url_template_definition(self): #Checking redirection
+            response = self.client.get(reverse("definition"))
+            self.assertEqual(response.status_code, 302)
+
+        def test_url_template_home(self): # Checking url
+            response = self.client.get(reverse("home"))
+            self.assertEqual(response.status_code, 200)
+
+        def test_url_template_login_register(self): #Checking url
+            response = self.client.get(reverse("login"))
+            self.assertEqual(response.status_code, 200)
+        
+        def test_url_template_login_register(self): #Checking url
+            response = self.client.get(reverse("register"))
+            self.assertEqual(response.status_code, 200)
+
+        def test_url_template_trending(self): #Checking redirection
+            response = self.client.get(reverse("trending"))
+            self.assertEqual(response.status_code, 302)
 
     except (requests.exceptions.RequestException, KeyError) as e:
         print(e)
