@@ -74,6 +74,9 @@ class queryTestCase(TestCase):
         def test_Currency(self):
             self.assertIn("currency", self.context.get("response").keys())
 
+        def test_200daysAverage(self):
+            self.assertIn("twoHundredDayAverage", self.context.get("response").keys())
+
 
     except (requests.exceptions.RequestException, KeyError) as e:
         print(e)
