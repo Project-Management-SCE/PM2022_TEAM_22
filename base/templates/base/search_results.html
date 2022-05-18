@@ -91,6 +91,9 @@
                 <p>You need to be a VIP / Platinum user to view this information.</p>
                 {% endif %}
 
+                <p style="font-weight: bold;">200 days average price:</p>
+                <p>{{response.twoHundredDayAverage}}</p>
+
                 <p style="font-weight: bold;">Summary:</p>
                 {% if group.name == 'platinum' %}
                 <p class="summary">{{sum.longBusinessSummary}}</p>
