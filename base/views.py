@@ -135,11 +135,10 @@ def search_results(request):
 
         url2 = f"https://yfapi.net/v11/finance/quoteSummary/{q}?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile"
         url3 = f"https://yfapi.net/v6/finance/recommendationsbysymbol/{q}"
-        paccwordAnton = {"x-api-key": getenv("API_TOKEN")}
-        responseSummary = requests.request("GET", url2, headers=paccwordAnton, params=querystring)
+        responseSummary = requests.request("GET", url2, headers=headers, params=querystring)
         dictSummary = {"sum": responseSummary.json()["quoteSummary"]["result"][0]["assetProfile"]}
         context.update(dictSummary)
-        response3 = requests.request("GET", url3, headers=paccwordAnton, params=querystring)
+        response3 = requests.request("GET", url3, headers=headers, params=querystring)
         dictRecommended = {"recommended": response3.json()["finance"]["result"][0]["recommendedSymbols"]}
 
         context.update(dictRecommended)
