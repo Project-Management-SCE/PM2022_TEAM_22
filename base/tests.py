@@ -80,6 +80,9 @@ class queryTestCase(TestCase):
         def test_askSize(self):
             self.assertIn("askSize", self.context.get("response").keys())
 
+        def test_askADV3M(self):
+            self.assertIn("averageDailyVolume3Month", self.context.get("response").keys())
+
         def test_200daysAverage(self):
             self.assertIn("twoHundredDayAverage", self.context.get("response").keys())
 
