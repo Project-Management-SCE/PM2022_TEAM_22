@@ -77,6 +77,9 @@ class queryTestCase(TestCase):
         def test_bidSize(self):
             self.assertIn("bidSize", self.context.get("response").keys())
 
+        def test_askSize(self):
+            self.assertIn("askSize", self.context.get("response").keys())
+
         def test_200daysAverage(self):
             self.assertIn("twoHundredDayAverage", self.context.get("response").keys())
 

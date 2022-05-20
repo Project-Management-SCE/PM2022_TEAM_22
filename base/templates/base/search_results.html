@@ -98,6 +98,13 @@
                 <p>You need to be a VIP / Platinum user to view this information.</p>
                 {% endif %}
 
+                <p style="font-weight: bold;">Ask Size:</p>
+                {% if group.name == 'vip' or group.name == 'platinum' %}
+                <p>{{response.askSize}}</p>
+                {% else %}
+                <p>You need to be a VIP / Platinum user to view this information.</p>
+                {% endif %}
+
                 <p style="font-weight: bold;">200 days average price:</p>
                 {% if group.name == 'vip' or group.name == 'platinum' %}
                 <p>{{response.twoHundredDayAverage}}</p>
