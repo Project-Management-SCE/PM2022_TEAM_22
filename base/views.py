@@ -123,29 +123,31 @@ def search_results(request):
         )
         querystring = {"symbols": q}
         headers = {"x-api-key": getenv("API_TOKEN")}
-        response = requests.request("GET", quote_url, headers=headers, params=querystring)
-        response_beta = requests.request("GET", quoteSummary_url, headers=headers, params=querystring)
-        context = {"query": q, "response": response.json()["quoteResponse"]["result"][0]}
-        earn = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["earningsQuarterlyGrowth"]
-        beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
+        try:
+            response = requests.request("GET", quote_url, headers=headers, params=querystring)         
+            response_beta = requests.request("GET", quoteSummary_url, headers=headers, params=querystring)
+            context = {"query": q, "response": response.json()["quoteResponse"]["result"][0]}
+            earn = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["earningsQuarterlyGrowth"]
+            beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
+            
+            context["earn"] = earn["fmt"]
+            if beta:
+                context["beta"] = beta["raw"]
+            else:
+                context["beta"] = "NOT FOUND"
 
-        context["earn"] = earn["fmt"]
-        if beta:
-            context["beta"] = beta["raw"]
-        else:
-            context["beta"] = "NOT FOUND"
-
-        url2 = f"https://yfapi.net/v11/finance/quoteSummary/{q}?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile"
-        url3 = f"https://yfapi.net/v6/finance/recommendationsbysymbol/{q}"
-        responseSummary = requests.request("GET", url2, headers=headers, params=querystring)
-        dictSummary = {"sum": responseSummary.json()["quoteSummary"]["result"][0]["assetProfile"]}
-        context.update(dictSummary)
-        response3 = requests.request("GET", url3, headers=headers, params=querystring)
-        dictRecommended = {"recommended": response3.json()["finance"]["result"][0]["recommendedSymbols"]}
-
-        context.update(dictRecommended)
-        return render(request, "base/search_results.html", context)
-
+            url2 = f"https://yfapi.net/v11/finance/quoteSummary/{q}?lang=en&region=US&modules=defaultKeyStatistics%2CassetProfile"
+            url3 = f"https://yfapi.net/v6/finance/recommendationsbysymbol/{q}"
+            responseSummary = requests.request("GET", url2, headers=headers, params=querystring)
+            dictSummary = {"sum": responseSummary.json()["quoteSummary"]["result"][0]["assetProfile"]}
+            context.update(dictSummary)
+            response3 = requests.request("GET", url3, headers=headers, params=querystring)
+            dictRecommended = {"recommended": response3.json()["finance"]["result"][0]["recommendedSymbols"]}
+            context.update(dictRecommended)
+            return render(request, "base/search_results.html", context)
+        
+        except (IndexError, KeyError, TypeError):
+             return render(request, "base/error_page.html")
     else:
         return render(request, "base/home.html")
 
