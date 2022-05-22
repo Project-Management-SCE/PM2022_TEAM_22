@@ -43,6 +43,9 @@ class queryTestCase(TestCase):
             context["earn"] = earn["fmt"]
         else:
             context["earn"] = "NOT FOUND"
+            
+        def test_response(self):
+            self.assertEqual(self.response.status_code,200)
 
         def test_fiftyTwoWeekLow(self):
             self.assertIn("fiftyTwoWeekLow", self.context.get("response").keys())
