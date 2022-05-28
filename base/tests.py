@@ -32,6 +32,7 @@ class queryTestCase(TestCase):
         dictRecommended = {"recommended": responserecommend.json()["finance"]["result"][0]["recommendedSymbols"]}
         beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
         summary = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]
+        context["summary"] = summary;
         beta = summary["beta"]
         earn = summary["earningsQuarterlyGrowth"]
         if beta:
@@ -88,6 +89,18 @@ class queryTestCase(TestCase):
 
         def test_200daysAverage(self):
             self.assertIn("twoHundredDayAverage", self.context.get("response").keys())
+        def test_splitDate(self):
+            self.assertIn("lastSplitDate",self.context.get("summary").keys())
+
+        def test_exchangeTimezone(self):
+            self.assertIn("exchangeTimezoneName",self.context.get("response").keys())
+
+        def test_quoteType(self):
+            self.assertIn("quoteType",self.context.get("response").keys())
+
+        def test_Triggerable(self):
+            self.assertIn("triggerable",self.context.get("response").keys())
+
 
     except (requests.exceptions.RequestException, KeyError) as e:
         print(e)
