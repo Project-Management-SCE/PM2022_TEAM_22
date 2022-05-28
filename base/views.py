@@ -127,10 +127,11 @@ def search_results(request):
             response = requests.request("GET", quote_url, headers=headers, params=querystring)         
             response_beta = requests.request("GET", quoteSummary_url, headers=headers, params=querystring)
             context = {"query": q, "response": response.json()["quoteResponse"]["result"][0]}
-            earn = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["earningsQuarterlyGrowth"]
+            earn = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]
             beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
             
-            context["earn"] = earn["fmt"]
+            context["earn"] = earn["earningsQuarterlyGrowth"]["fmt"]
+            context["splitdate"] = earn["lastSplitDate"]["fmt"]
             if beta:
                 context["beta"] = beta["raw"]
             else:
