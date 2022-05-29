@@ -128,9 +128,40 @@
                 <p>You need to be a VIP / Platinum user to view this information.</p>
                 {% endif %}
 
+                <p style="font-weight: bold;">Split date:</p>
+                {% if group.name == 'vip' or group.name == 'platinum' %}
+                <p>{{splitdate}}</p>
+                {% else %}
+                <p>You need to be a VIP / Platinum user to view this information.</p>
+                {% endif %}
+
+                <p style="font-weight: bold;">Quote type:</p>
+                {% if group.name == 'vip' or group.name == 'platinum' %}
+                <p>{{response.quoteType}}</p>
+                {% else %}
+                <p>You need to be a VIP / Platinum user to view this information.</p>
+                {% endif %}
+
+                <p style="font-weight: bold;">Exchange Timezone :</p>
+                {% if group.name == 'vip' or group.name == 'platinum' %}
+                <p>Long name: {{response.exchangeTimezoneName}}</p>
+                <p>ShortName: {{response.exchangeTimezoneShortName}}</p>
+                {% else %}
+                <p>You need to be a VIP / Platinum user to view this information.</p>
+                {% endif %}
+
+                <p style="font-weight: bold;">Stock Triggerable:</p>
+                {% if group.name == 'vip' or group.name == 'platinum' %}
+                <p>{{response.triggerable}}</p>
+                {% else %}
+                <p>You need to be a VIP / Platinum user to view this information.</p>
+                {% endif %}
+
+
                 <p style="font-weight: bold;">best stocks Score:</p>
                 {% for temp in recommended %}
                 <p>{{temp.symbol}}--{{temp.score}}</p>
+
 
                 {% endfor %}
                 {% endfor %}

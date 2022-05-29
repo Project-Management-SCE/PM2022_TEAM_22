@@ -32,6 +32,7 @@ class queryTestCase(TestCase):
         dictRecommended = {"recommended": responserecommend.json()["finance"]["result"][0]["recommendedSymbols"]}
         beta = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]["beta"]
         summary = response_beta.json()["quoteSummary"]["result"][0]["defaultKeyStatistics"]
+        context["summary"] = summary;
         beta = summary["beta"]
         earn = summary["earningsQuarterlyGrowth"]
         if beta:
@@ -43,6 +44,9 @@ class queryTestCase(TestCase):
             context["earn"] = earn["fmt"]
         else:
             context["earn"] = "NOT FOUND"
+            
+        def test_response(self):
+            self.assertEqual(self.response.status_code,200)
 
         def test_fiftyTwoWeekLow(self):
             self.assertIn("fiftyTwoWeekLow", self.context.get("response").keys())
@@ -85,6 +89,18 @@ class queryTestCase(TestCase):
 
         def test_200daysAverage(self):
             self.assertIn("twoHundredDayAverage", self.context.get("response").keys())
+        def test_splitDate(self):
+            self.assertIn("lastSplitDate",self.context.get("summary").keys())
+
+        def test_exchangeTimezone(self):
+            self.assertIn("exchangeTimezoneName",self.context.get("response").keys())
+
+        def test_quoteType(self):
+            self.assertIn("quoteType",self.context.get("response").keys())
+
+        def test_Triggerable(self):
+            self.assertIn("triggerable",self.context.get("response").keys())
+
 
     except (requests.exceptions.RequestException, KeyError) as e:
         print(e)
