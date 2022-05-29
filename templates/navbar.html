@@ -38,6 +38,7 @@
 </div>
 <div class="topnav">
   <a href="{% url 'login' %}" class="nav-link">Login</a>
+  <a href="{% provider_login_url 'google' %}">Login with Google</a>
 </div>
 {% endif %}
 <hr />
